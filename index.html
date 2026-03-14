@@ -679,7 +679,8 @@ async function openDetail(id) {
     ['刊物', m.imprint],
     ['年份', m.start_year],
     ['分級', m.age_rating],
-    ['總卷數', m.volume_count ? m.volume_count + ' 卷' : null],
+    ['繁中卷數', m.volume_count ? m.volume_count + ' 卷' : null],
+    ['日文卷數', m.jp_vol ? m.jp_vol + ' 卷' : null],
   ].filter(r=>r[1]);
   document.getElementById('d-meta').innerHTML = meta.map(r=>`
     <div class="meta-row"><span class="meta-key">${r[0]}</span><span class="meta-val">${r[1]}</span></div>
