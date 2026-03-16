@@ -309,6 +309,11 @@ select option{background:var(--bg3);}
 <div class="toast" id="toast"></div>
 
 <script>
+function formatDate(d){
+  if(!d)return null;
+  const p=d.slice(0,10).split('-');
+  return p[0]+'年'+parseInt(p[1])+'月'+parseInt(p[2])+'日';
+}
 const SURL='https://lzyplcvyinipkghfdvtx.supabase.co';
 const SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6eXBsY3Z5aW5pcGtnaGZkdnR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0ODgzNzUsImV4cCI6MjA4OTA2NDM3NX0.vUqzwgb8r0twkxZ3ltgtfVdBfQVN92p9A1zDjzrFLF8';
 const H={'apikey':SKEY,'Authorization':'Bearer '+SKEY,'Content-Type':'application/json'};
@@ -386,7 +391,7 @@ async function openDetail(id){
     ['出版社',m.publisher],
     ['刊物',m.imprint],
     ['年份',m.start_year?(m.start_year+'年'+(m.start_month?m.start_month+'月':'')):null],
-    ['最新發售',m.latest_release?(()=>{const p=m.latest_release.slice(0,10).split('-');return p[0]+'年'+parseInt(p[1])+'月'+parseInt(p[2])+'日';})()):null],
+    ['最新發售',m.latest_release?formatDate(m.latest_release):null],
     ['分級',m.age_rating],
     ['總卷數',m.volume_count?m.volume_count+' 卷':null],
     ['評分',m.rating?m.rating+' / 5':null],
