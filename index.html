@@ -8,410 +8,153 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0e0e0e;
-  --bg2: #161616;
-  --bg3: #1e1e1e;
-  --border: #2a2a2a;
-  --border2: #333;
-  --text: #f0ede6;
-  --text2: #a09890;
-  --text3: #5a5450;
-  --accent: #e8c97a;
-  --accent2: #c4a855;
-  --red: #e85d4a;
-  --green: #4caf7d;
-  --blue: #5b9bd5;
-  --font-display: 'Noto Serif TC', serif;
-  --font-body: 'Noto Sans TC', sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  --bg:#0e0e0e;--bg2:#161616;--bg3:#1e1e1e;--border:#2a2a2a;--border2:#333;
+  --text:#f0ede6;--text2:#a09890;--text3:#5a5450;
+  --accent:#e8c97a;--accent2:#c4a855;--red:#e85d4a;--green:#4caf7d;--blue:#5b9bd5;
+  --font-display:'Noto Serif TC',serif;--font-body:'Noto Sans TC',sans-serif;--font-mono:'Space Mono',monospace;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 14px;
-  line-height: 1.6;
-  min-height: 100vh;
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.6;min-height:100vh;}
 
-/* HEADER */
-header {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(14,14,14,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem;
-  display: flex; align-items: center; gap: 2rem;
-  height: 56px;
-}
-.logo {
-  font-family: var(--font-mono);
-  font-size: 15px; font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.15em;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.logo span { color: var(--text3); font-weight: 400; }
-.search-wrap {
-  flex: 1; max-width: 480px;
-  position: relative;
-}
-.search-wrap svg {
-  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-  width: 14px; height: 14px; color: var(--text3);
-}
-#search {
-  width: 100%;
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 6px;
-  padding: 7px 12px 7px 34px;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 13px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-#search:focus { border-color: var(--accent2); }
-#search::placeholder { color: var(--text3); }
-nav { display: flex; gap: 0; margin-left: auto; }
-.nav-btn {
-  background: none; border: none; cursor: pointer;
-  color: var(--text2); font-family: var(--font-body);
-  font-size: 13px; padding: 0 1rem; height: 56px;
-  transition: color 0.2s;
-  text-decoration: none; display: flex; align-items: center;
-}
-.nav-btn:hover { color: var(--text); }
-.nav-btn.primary {
-  background: var(--accent);
-  color: #000; font-weight: 500;
-  border-radius: 6px; height: 32px; padding: 0 1rem;
-  margin-left: 0.5rem;
-}
-.nav-btn.primary:hover { background: var(--accent2); }
+header{position:sticky;top:0;z-index:100;background:rgba(14,14,14,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;gap:1.5rem;height:56px;}
+.logo{font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--accent);letter-spacing:.15em;text-decoration:none;white-space:nowrap;}
+.logo span{color:var(--text3);font-weight:400;}
+.search-wrap{flex:1;max-width:480px;position:relative;}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text3);}
+#search{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:7px 12px 7px 34px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;transition:border-color .2s;}
+#search:focus{border-color:var(--accent2);}
+#search::placeholder{color:var(--text3);}
+nav{display:flex;gap:.25rem;margin-left:auto;align-items:center;}
+.nav-btn{background:none;border:none;cursor:pointer;color:var(--text2);font-family:var(--font-body);font-size:13px;padding:0 .875rem;height:56px;transition:color .2s;text-decoration:none;display:flex;align-items:center;}
+.nav-btn:hover{color:var(--text);}
+.nav-btn.primary{background:var(--accent);color:#000;font-weight:500;border-radius:6px;height:32px;padding:0 1rem;}
+.nav-btn.primary:hover{background:var(--accent2);}
 
-/* HERO */
-.hero {
-  padding: 3rem 2rem 2rem;
-  border-bottom: 1px solid var(--border);
-}
-.hero h1 {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
-}
-.hero h1 em { color: var(--accent); font-style: normal; }
-.hero p { color: var(--text2); font-size: 13px; max-width: 480px; }
-.stats-row {
-  display: flex; gap: 2rem; margin-top: 1.5rem;
-}
-.stat { display: flex; flex-direction: column; gap: 2px; }
-.stat-num {
-  font-family: var(--font-mono);
-  font-size: 20px; font-weight: 700;
-  color: var(--accent);
-}
-.stat-label { font-size: 11px; color: var(--text3); letter-spacing: 0.05em; }
+.hero{padding:3rem 2rem 2rem;border-bottom:1px solid var(--border);}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.2;margin-bottom:.5rem;}
+.hero h1 em{color:var(--accent);font-style:normal;}
+.hero p{color:var(--text2);font-size:13px;max-width:480px;}
+.stats-row{display:flex;gap:2rem;margin-top:1.5rem;}
+.stat{display:flex;flex-direction:column;gap:2px;}
+.stat-num{font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--accent);}
+.stat-label{font-size:11px;color:var(--text3);letter-spacing:.05em;}
 
-/* FILTERS */
-.filters {
-  padding: 1rem 2rem;
-  border-bottom: 1px solid var(--border);
-  display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
-}
-.filter-label { font-size: 11px; color: var(--text3); margin-right: 0.25rem; letter-spacing: 0.05em; }
-.chip {
-  background: none;
-  border: 1px solid var(--border2);
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-size: 12px; color: var(--text2);
-  cursor: pointer; transition: all 0.15s;
-  font-family: var(--font-body);
-}
-.chip:hover { border-color: var(--accent2); color: var(--text); }
-.chip.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 500; }
+.filters{padding:1rem 2rem;border-bottom:1px solid var(--border);display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;}
+.filter-label{font-size:11px;color:var(--text3);margin-right:.25rem;letter-spacing:.05em;}
+.chip{background:none;border:1px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .15s;font-family:var(--font-body);}
+.chip:hover{border-color:var(--accent2);color:var(--text);}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:500;}
 
-/* MAIN GRID */
-.main { padding: 1.5rem 2rem 3rem; }
-.section-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 1.25rem;
-}
-.section-title {
-  font-family: var(--font-mono);
-  font-size: 11px; color: var(--text3);
-  letter-spacing: 0.1em; text-transform: uppercase;
-}
-.result-count { font-size: 12px; color: var(--text3); }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 1.25rem;
-}
-.card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s;
-  text-decoration: none; color: inherit;
-}
-.card:hover { transform: translateY(-3px); border-color: var(--border2); }
-.card-cover {
-  width: 100%; aspect-ratio: 2/3;
-  background: var(--bg3);
-  position: relative; overflow: hidden;
-}
-.card-cover img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.3s;
-}
-.card:hover .card-cover img { transform: scale(1.04); }
-.card-cover-placeholder {
-  width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text3); font-size: 11px;
-  font-family: var(--font-mono);
-}
-.status-badge {
-  position: absolute; top: 8px; left: 8px;
-  font-size: 10px; font-weight: 500;
-  padding: 2px 7px; border-radius: 4px;
-  font-family: var(--font-mono);
-}
-.status-ongoing { background: rgba(76,175,125,0.2); color: #4caf7d; border: 1px solid rgba(76,175,125,0.3); }
-.status-complete { background: rgba(91,155,213,0.2); color: #5b9bd5; border: 1px solid rgba(91,155,213,0.3); }
-.status-hiatus { background: rgba(232,93,74,0.15); color: #e85d4a; border: 1px solid rgba(232,93,74,0.25); }
-.card-body { padding: 10px 10px 12px; }
-.card-title { font-size: 13px; font-weight: 500; line-height: 1.3; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.card-ja { font-size: 11px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 6px; }
-.card-author { font-size: 11px; color: var(--text2); }
-.card-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
-.tag {
-  font-size: 10px; padding: 1px 6px;
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 3px; color: var(--text3);
-}
+.main{padding:1.5rem 2rem 3rem;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+.section-title{font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;}
+.result-count{font-size:12px;color:var(--text3);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1.25rem;}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;text-decoration:none;color:inherit;}
+.card:hover{transform:translateY(-3px);border-color:var(--border2);}
+.card-cover{width:100%;aspect-ratio:2/3;background:var(--bg3);position:relative;overflow:hidden;}
+.card-cover img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
+.card:hover .card-cover img{transform:scale(1.04);}
+.card-cover-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px;font-family:var(--font-mono);}
+.status-badge{position:absolute;top:8px;left:8px;font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;font-family:var(--font-mono);}
+.status-ongoing{background:rgba(76,175,125,.2);color:#4caf7d;border:1px solid rgba(76,175,125,.3);}
+.status-complete{background:rgba(91,155,213,.2);color:#5b9bd5;border:1px solid rgba(91,155,213,.3);}
+.status-hiatus{background:rgba(232,93,74,.15);color:#e85d4a;border:1px solid rgba(232,93,74,.25);}
+.card-body{padding:10px 10px 12px;}
+.card-title{font-size:13px;font-weight:500;line-height:1.3;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-ja{font-size:11px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px;}
+.card-author{font-size:11px;color:var(--text2);}
+.card-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}
+.tag{font-size:10px;padding:1px 6px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;color:var(--text3);}
 
-/* EMPTY / LOADING */
-.loading {
-  grid-column: 1/-1;
-  display: flex; align-items: center; justify-content: center;
-  padding: 4rem; color: var(--text3);
-  font-family: var(--font-mono); font-size: 12px;
-  gap: 0.75rem;
-}
-.spinner {
-  width: 16px; height: 16px;
-  border: 2px solid var(--border2);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.empty {
-  grid-column: 1/-1;
-  text-align: center; padding: 4rem;
-  color: var(--text3); font-size: 13px;
-}
+.loading{grid-column:1/-1;display:flex;align-items:center;justify-content:center;padding:4rem;color:var(--text3);font-family:var(--font-mono);font-size:12px;gap:.75rem;}
+.spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty{grid-column:1/-1;text-align:center;padding:4rem;color:var(--text3);font-size:13px;}
 
-/* MODAL OVERLAY */
-.overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 200;
-  background: rgba(0,0,0,0.8);
-  backdrop-filter: blur(4px);
-  overflow-y: auto;
-  padding: 2rem 1rem;
-}
-.overlay.open { display: flex; align-items: flex-start; justify-content: center; }
-.modal {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: 12px;
-  width: 100%; max-width: 860px;
-  overflow: hidden;
-  animation: slideUp 0.25s ease;
-}
-@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } }
-.modal-close {
-  position: absolute; top: 1rem; right: 1rem;
-  background: var(--bg3); border: 1px solid var(--border2);
-  color: var(--text2); width: 32px; height: 32px;
-  border-radius: 50%; cursor: pointer; font-size: 18px;
-  display: flex; align-items: center; justify-content: center;
-  transition: color 0.2s;
-}
-.modal-close:hover { color: var(--text); }
-.modal-hero {
-  display: flex; gap: 2rem; padding: 2rem;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.modal-cover {
-  width: 160px; flex-shrink: 0;
-  aspect-ratio: 2/3; border-radius: 6px;
-  overflow: hidden; background: var(--bg3);
-}
-.modal-cover img { width: 100%; height: 100%; object-fit: cover; }
-.modal-info { flex: 1; min-width: 0; }
-.modal-title {
-  font-family: var(--font-display);
-  font-size: 1.6rem; font-weight: 700;
-  line-height: 1.2; margin-bottom: 4px;
-}
-.modal-ja { font-size: 13px; color: var(--text3); margin-bottom: 1rem; }
-.modal-meta { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
-.meta-row { display: flex; gap: 0.75rem; align-items: baseline; }
-.meta-key { font-size: 11px; color: var(--text3); width: 56px; flex-shrink: 0; letter-spacing: 0.03em; }
-.meta-val { font-size: 13px; color: var(--text); }
-.modal-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 14px; border-radius: 6px;
-  font-size: 12px; font-weight: 500; cursor: pointer;
-  border: 1px solid var(--border2);
-  background: var(--bg3); color: var(--text2);
-  transition: all 0.15s; font-family: var(--font-body);
-  text-decoration: none;
-}
-.btn:hover { border-color: var(--accent2); color: var(--text); }
-.btn.primary { background: var(--accent); border-color: var(--accent); color: #000; }
-.btn.primary:hover { background: var(--accent2); }
-.modal-body { padding: 2rem; }
-.section-h {
-  font-family: var(--font-mono);
-  font-size: 10px; color: var(--text3);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border);
-}
-.summary-text { font-size: 13px; color: var(--text2); line-height: 1.8; margin-bottom: 2rem; }
-.genres-wrap { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2rem; }
-.genre-tag {
-  font-size: 11px; padding: 3px 10px;
-  border: 1px solid var(--border2); border-radius: 4px;
-  color: var(--text2);
-}
+/* OVERLAY BASE */
+.overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.82);backdrop-filter:blur(4px);overflow-y:auto;padding:2rem 1rem;}
+.overlay.open{display:flex;align-items:flex-start;justify-content:center;}
 
-/* VOLUMES LIST */
-.volumes-list { display: flex; flex-direction: column; gap: 10px; }
-.volume-item {
-  display: flex; gap: 1rem;
-  padding: 1rem; border-radius: 8px;
-  background: var(--bg3); border: 1px solid var(--border);
-}
-.vol-cover {
-  width: 52px; flex-shrink: 0;
-  aspect-ratio: 2/3; border-radius: 4px;
-  overflow: hidden; background: var(--bg);
-}
-.vol-cover img { width: 100%; height: 100%; object-fit: cover; }
-.vol-cover-ph {
-  width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-mono); font-size: 10px; color: var(--text3);
-}
-.vol-info { flex: 1; min-width: 0; }
-.vol-num {
-  font-family: var(--font-mono); font-size: 10px;
-  color: var(--accent); margin-bottom: 2px;
-}
-.vol-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-.vol-summary { font-size: 12px; color: var(--text2); line-height: 1.6; }
-.vol-meta { font-size: 11px; color: var(--text3); margin-top: 4px; }
-.no-volumes { font-size: 13px; color: var(--text3); text-align: center; padding: 2rem; }
+/* DETAIL MODAL */
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;width:100%;max-width:860px;overflow:hidden;animation:slideUp .25s ease;position:relative;}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0;}}
+.modal-close{position:absolute;top:1rem;right:1rem;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:color .2s;z-index:10;}
+.modal-close:hover{color:var(--text);}
+.modal-hero{display:flex;gap:2rem;padding:2rem;border-bottom:1px solid var(--border);position:relative;}
+.modal-cover{width:160px;flex-shrink:0;aspect-ratio:2/3;border-radius:6px;overflow:hidden;background:var(--bg3);}
+.modal-cover img{width:100%;height:100%;object-fit:cover;}
+.modal-cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px;font-family:var(--font-mono);}
+.modal-info{flex:1;min-width:0;}
+.modal-title{font-family:var(--font-display);font-size:1.6rem;font-weight:700;line-height:1.2;margin-bottom:4px;}
+.modal-ja{font-size:13px;color:var(--text3);margin-bottom:1rem;}
+.modal-meta{display:flex;flex-direction:column;gap:6px;margin-bottom:1rem;}
+.meta-row{display:flex;gap:.75rem;align-items:baseline;}
+.meta-key{font-size:11px;color:var(--text3);width:64px;flex-shrink:0;letter-spacing:.03em;}
+.meta-val{font-size:13px;color:var(--text);}
+.modal-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);transition:all .15s;font-family:var(--font-body);text-decoration:none;}
+.btn:hover{border-color:var(--accent2);color:var(--text);}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#000;}
+.btn.primary:hover{background:var(--accent2);}
+.btn.danger{border-color:rgba(232,93,74,.4);color:var(--red);}
+.btn.danger:hover{background:rgba(232,93,74,.1);}
+.modal-body{padding:2rem;}
+.section-h{font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+.section-h-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+.section-h-row .section-h{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.summary-text{font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:2rem;}
+.genres-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2rem;}
+.genre-tag{font-size:11px;padding:3px 10px;border:1px solid var(--border2);border-radius:4px;color:var(--text2);}
 
-/* SUBMIT MODAL */
-.submit-overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 300;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(4px);
-  overflow-y: auto; padding: 2rem 1rem;
-}
-.submit-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
-.submit-modal {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: 12px;
-  width: 100%; max-width: 600px;
-  padding: 2rem;
-  animation: slideUp 0.25s ease;
-  position: relative;
-}
-.submit-modal h2 {
-  font-family: var(--font-display);
-  font-size: 1.3rem; margin-bottom: 0.25rem;
-}
-.submit-modal .subtitle { font-size: 12px; color: var(--text3); margin-bottom: 1.5rem; }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.form-group { display: flex; flex-direction: column; gap: 5px; }
-.form-group.full { grid-column: 1/-1; }
-label { font-size: 11px; color: var(--text3); letter-spacing: 0.04em; }
-input, textarea, select {
-  background: var(--bg3);
-  border: 1px solid var(--border2);
-  border-radius: 6px;
-  padding: 8px 10px;
-  color: var(--text);
-  font-family: var(--font-body); font-size: 13px;
-  outline: none; transition: border-color 0.2s;
-  width: 100%;
-}
-input:focus, textarea:focus, select:focus { border-color: var(--accent2); }
-input::placeholder, textarea::placeholder { color: var(--text3); }
-textarea { resize: vertical; min-height: 80px; }
-select option { background: var(--bg3); }
-.form-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
+.xml-output{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:1rem;font-family:var(--font-mono);font-size:11px;color:#4caf7d;white-space:pre;overflow-x:auto;margin-top:1rem;max-height:260px;overflow-y:auto;display:none;}
 
-/* TOAST */
-.toast {
-  position: fixed; bottom: 2rem; right: 2rem; z-index: 500;
-  background: var(--bg3); border: 1px solid var(--border2);
-  border-radius: 8px; padding: 12px 16px;
-  font-size: 13px; color: var(--text);
-  transform: translateY(80px); opacity: 0;
-  transition: all 0.3s; pointer-events: none;
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast.success { border-color: rgba(76,175,125,0.4); }
-.toast.error { border-color: rgba(232,93,74,0.4); }
+/* VOLUMES */
+.volumes-list{display:flex;flex-direction:column;gap:10px;}
+.volume-item{display:flex;gap:1rem;padding:1rem;border-radius:8px;background:var(--bg3);border:1px solid var(--border);position:relative;}
+.vol-cover{width:52px;flex-shrink:0;aspect-ratio:2/3;border-radius:4px;overflow:hidden;background:var(--bg);}
+.vol-cover img{width:100%;height:100%;object-fit:cover;}
+.vol-cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
+.vol-info{flex:1;min-width:0;}
+.vol-num{font-family:var(--font-mono);font-size:10px;color:var(--accent);margin-bottom:2px;}
+.vol-title{font-size:13px;font-weight:500;margin-bottom:4px;}
+.vol-summary{font-size:12px;color:var(--text2);line-height:1.6;}
+.vol-meta{font-size:11px;color:var(--text3);margin-top:4px;}
+.vol-edit-btn{position:absolute;top:8px;right:8px;background:none;border:1px solid var(--border2);border-radius:4px;color:var(--text3);font-size:11px;padding:2px 8px;cursor:pointer;font-family:var(--font-body);transition:all .15s;}
+.vol-edit-btn:hover{color:var(--text);border-color:var(--accent2);}
+.no-volumes{font-size:13px;color:var(--text3);text-align:center;padding:2rem;}
 
-/* XML EXPORT */
-.xml-output {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 1rem;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: #4caf7d;
-  white-space: pre;
-  overflow-x: auto;
-  margin-top: 1rem;
-  max-height: 300px;
-  overflow-y: auto;
-  display: none;
-}
+/* GENERIC FORM MODAL */
+.form-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.88);backdrop-filter:blur(4px);overflow-y:auto;padding:2rem 1rem;}
+.form-overlay.open{display:flex;align-items:flex-start;justify-content:center;}
+.form-modal{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;width:100%;max-width:620px;padding:2rem;animation:slideUp .25s ease;position:relative;}
+.form-modal h2{font-family:var(--font-display);font-size:1.3rem;margin-bottom:.25rem;}
+.form-modal .subtitle{font-size:12px;color:var(--text3);margin-bottom:1.5rem;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-group.full{grid-column:1/-1;}
+label{font-size:11px;color:var(--text3);letter-spacing:.04em;}
+input,textarea,select{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:8px 10px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;transition:border-color .2s;width:100%;}
+input:focus,textarea:focus,select:focus{border-color:var(--accent2);}
+input::placeholder,textarea::placeholder{color:var(--text3);}
+textarea{resize:vertical;min-height:80px;}
+select option{background:var(--bg3);}
+.form-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem;}
 
-@media (max-width: 640px) {
-  header { padding: 0 1rem; gap: 0.75rem; }
-  .hero { padding: 1.5rem 1rem 1.25rem; }
-  .filters { padding: 0.75rem 1rem; }
-  .main { padding: 1rem 1rem 2rem; }
-  .modal-hero { flex-direction: column; gap: 1rem; }
-  .modal-cover { width: 120px; }
-  .form-grid { grid-template-columns: 1fr; }
+.toast{position:fixed;bottom:2rem;right:2rem;z-index:500;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--text);transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;max-width:300px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{border-color:rgba(76,175,125,.4);}
+.toast.error{border-color:rgba(232,93,74,.4);}
+
+@media(max-width:640px){
+  header{padding:0 1rem;gap:.75rem;}
+  .hero{padding:1.5rem 1rem 1.25rem;}
+  .filters{padding:.75rem 1rem;}
+  .main{padding:1rem 1rem 2rem;}
+  .modal-hero{flex-direction:column;gap:1rem;}
+  .modal-cover{width:120px;}
+  .form-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -424,7 +167,7 @@ select option { background: var(--bg3); }
     <input type="text" id="search" placeholder="搜尋漫畫、作者、出版社…">
   </div>
   <nav>
-    <a class="nav-btn" href="#" onclick="openSubmit()">+ 提交漫畫</a>
+    <button class="nav-btn primary" onclick="openMangaForm()">+ 提交漫畫</button>
     <a class="nav-btn" href="https://lzyplcvyinipkghfdvtx.supabase.co/rest/v1/manga?select=*" target="_blank">API</a>
   </nav>
 </header>
@@ -433,23 +176,17 @@ select option { background: var(--bg3); }
   <h1>日本漫畫<em>中文</em>資料庫</h1>
   <p>收錄日本漫畫的完整中文元數據，支援 ComicInfo.xml 匯出與開放 API 調用。</p>
   <div class="stats-row">
-    <div class="stat">
-      <span class="stat-num" id="stat-manga">—</span>
-      <span class="stat-label">部漫畫</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num" id="stat-volumes">—</span>
-      <span class="stat-label">本單行本</span>
-    </div>
+    <div class="stat"><span class="stat-num" id="stat-manga">—</span><span class="stat-label">部漫畫</span></div>
+    <div class="stat"><span class="stat-num" id="stat-volumes">—</span><span class="stat-label">本單行本</span></div>
   </div>
 </section>
 
 <div class="filters">
   <span class="filter-label">狀態</span>
-  <button class="chip active" onclick="setFilter('status','')">全部</button>
-  <button class="chip" onclick="setFilter('status','连载中')">連載中</button>
-  <button class="chip" onclick="setFilter('status','完结')">完結</button>
-  <button class="chip" onclick="setFilter('status','休刊')">休刊</button>
+  <button class="chip active" onclick="setFilter('')">全部</button>
+  <button class="chip" onclick="setFilter('连载中')">連載中</button>
+  <button class="chip" onclick="setFilter('完结')">完結</button>
+  <button class="chip" onclick="setFilter('休刊')">休刊</button>
 </div>
 
 <main class="main">
@@ -462,82 +199,66 @@ select option { background: var(--bg3); }
   </div>
 </main>
 
-<!-- DETAIL MODAL -->
-<div class="overlay" id="detailOverlay" onclick="closeDetail(event)">
+<!-- DETAIL OVERLAY -->
+<div class="overlay" id="detailOverlay" onclick="overlayClick(event,'detailOverlay',closeDetail)">
   <div class="modal" id="detailModal">
-    <button class="modal-close" onclick="closeDetailBtn()">×</button>
+    <button class="modal-close" onclick="closeDetail()">×</button>
     <div class="modal-hero">
-      <div class="modal-cover"><img id="d-cover" src="" alt=""></div>
+      <div class="modal-cover" id="d-cover-wrap"></div>
       <div class="modal-info">
-        <div id="d-status-badge"></div>
+        <div id="d-status-badge" style="margin-bottom:8px"></div>
         <h2 class="modal-title" id="d-title"></h2>
         <p class="modal-ja" id="d-ja"></p>
         <div class="modal-meta" id="d-meta"></div>
         <div class="modal-actions">
           <button class="btn primary" onclick="exportXML()">↓ ComicInfo.xml</button>
           <button class="btn" onclick="copyAPI()">{ } API</button>
+          <button class="btn" onclick="openMangaForm(currentManga)">✎ 編輯</button>
         </div>
         <div class="xml-output" id="xmlOutput"></div>
       </div>
     </div>
     <div class="modal-body">
-      <div id="d-summary-section">
+      <div style="margin-bottom:2rem">
         <p class="section-h">簡介</p>
         <p class="summary-text" id="d-summary"></p>
       </div>
-      <div id="d-genres-section">
+      <div style="margin-bottom:2rem" id="d-genres-section">
         <p class="section-h">類型 / 標籤</p>
         <div class="genres-wrap" id="d-genres"></div>
       </div>
       <div>
-        <p class="section-h">單行本列表</p>
+        <div class="section-h-row">
+          <span class="section-h">單行本列表</span>
+          <button class="btn" style="font-size:11px;padding:4px 10px" onclick="openVolumeForm()">+ 新增單行本</button>
+        </div>
         <div class="volumes-list" id="d-volumes"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SUBMIT MODAL -->
-<div class="submit-overlay" id="submitOverlay" onclick="closeSubmitClick(event)">
-  <div class="submit-modal">
-    <button class="modal-close" onclick="closeSubmit()">×</button>
-    <h2>提交新漫畫</h2>
+<!-- MANGA FORM OVERLAY -->
+<div class="form-overlay" id="mangaFormOverlay" onclick="overlayClick(event,'mangaFormOverlay',closeMangaForm)">
+  <div class="form-modal">
+    <button class="modal-close" onclick="closeMangaForm()">×</button>
+    <h2 id="mangaFormTitle">提交新漫畫</h2>
     <p class="subtitle">資料將在審核後公開顯示</p>
     <div class="form-grid">
-      <div class="form-group">
-        <label>標題（中文）*</label>
-        <input type="text" id="f-title-zh" placeholder="魔女守護者">
-      </div>
-      <div class="form-group">
-        <label>標題（日文）</label>
-        <input type="text" id="f-title-ja" placeholder="WITCH WATCH">
-      </div>
-      <div class="form-group">
-        <label>作者（原作）</label>
-        <input type="text" id="f-writer" placeholder="篠原健太">
-      </div>
-      <div class="form-group">
-        <label>作畫</label>
-        <input type="text" id="f-penciller" placeholder="（如與原作相同可留空）">
-      </div>
-      <div class="form-group">
-        <label>出版社</label>
-        <input type="text" id="f-publisher" placeholder="集英社">
-      </div>
-      <div class="form-group">
-        <label>連載刊物</label>
-        <input type="text" id="f-imprint" placeholder="週刊少年JUMP">
-      </div>
-      <div class="form-group">
-        <label>連載狀態</label>
+      <div class="form-group"><label>標題（中文）*</label><input type="text" id="f-title-zh" placeholder="魔女守護者"></div>
+      <div class="form-group"><label>標題（日文）</label><input type="text" id="f-title-ja" placeholder="WITCH WATCH"></div>
+      <div class="form-group"><label>作者（原作）</label><input type="text" id="f-writer" placeholder="篠原健太"></div>
+      <div class="form-group"><label>作畫（如與原作不同）</label><input type="text" id="f-penciller" placeholder="留空則同原作"></div>
+      <div class="form-group"><label>出版社</label><input type="text" id="f-publisher" placeholder="集英社"></div>
+      <div class="form-group"><label>連載刊物</label><input type="text" id="f-imprint" placeholder="週刊少年JUMP"></div>
+      <div class="form-group"><label>連載狀態</label>
         <select id="f-status">
           <option value="连载中">連載中</option>
           <option value="完结">完結</option>
           <option value="休刊">休刊</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>年齡分級</label>
+      <div class="form-group"><label>年齡分級</label>
         <select id="f-age">
           <option value="Everyone">全年齡</option>
           <option value="Teen">青少年</option>
@@ -545,38 +266,42 @@ select option { background: var(--bg3); }
           <option value="Adults Only 18+">成人 18+</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>類型（逗號分隔）</label>
-        <input type="text" id="f-genres" placeholder="少年, 搞笑, 戰鬥">
-      </div>
-      <div class="form-group">
-        <label>標籤</label>
-        <input type="text" id="f-tags" placeholder="JUMP, 超能力">
-      </div>
-      <div class="form-group">
-        <label>封面圖片網址</label>
-        <input type="text" id="f-cover" placeholder="https://…">
-      </div>
-      <div class="form-group">
-        <label>開始年份</label>
-        <input type="number" id="f-year" placeholder="2021">
-      </div>
-      <div class="form-group">
-        <label>繁中卷數</label>
-        <input type="number" id="f-volume_count" placeholder="113">
-      </div>
-      <div class="form-group">
-        <label>日文卷數</label>
-        <input type="number" id="f-jp_vol" placeholder="15">
-      </div>
-      <div class="form-group full">
-        <label>簡介</label>
-        <textarea id="f-summary" placeholder="請輸入漫畫故事簡介…"></textarea>
-      </div>
+      <div class="form-group"><label>類型（逗號分隔）</label><input type="text" id="f-genres" placeholder="少年, 搞笑, 戰鬥"></div>
+      <div class="form-group"><label>標籤（逗號分隔）</label><input type="text" id="f-tags" placeholder="JUMP, 超能力"></div>
+      <div class="form-group"><label>封面圖片網址</label><input type="text" id="f-cover" placeholder="https://…"></div>
+      <div class="form-group"><label>開始年份</label><input type="number" id="f-year" placeholder="2021"></div>
+      <div class="form-group"><label>開始月份</label><input type="number" id="f-month" placeholder="1" min="1" max="12"></div>
+      <div class="form-group"><label>總卷數（完結後填）</label><input type="number" id="f-count" placeholder="—"></div>
+      <div class="form-group"><label>官方網址</label><input type="text" id="f-web" placeholder="https://…"></div>
+      <div class="form-group"><label>評分（0–5）</label><input type="number" id="f-rating" placeholder="4.5" min="0" max="5" step="0.1"></div>
+      <div class="form-group full"><label>簡介</label><textarea id="f-summary" rows="4" placeholder="請輸入漫畫故事簡介…"></textarea></div>
+      <div class="form-group full"><label>備註</label><textarea id="f-notes" rows="2" placeholder="編輯備註…"></textarea></div>
     </div>
     <div class="form-actions">
-      <button class="btn" onclick="closeSubmit()">取消</button>
-      <button class="btn primary" onclick="submitManga()">提交</button>
+      <button class="btn" onclick="closeMangaForm()">取消</button>
+      <button class="btn primary" id="mangaFormSubmitBtn" onclick="submitManga()">提交</button>
+    </div>
+  </div>
+</div>
+
+<!-- VOLUME FORM OVERLAY -->
+<div class="form-overlay" id="volumeFormOverlay" onclick="overlayClick(event,'volumeFormOverlay',closeVolumeForm)">
+  <div class="form-modal">
+    <button class="modal-close" onclick="closeVolumeForm()">×</button>
+    <h2 id="volumeFormTitle">新增單行本</h2>
+    <p class="subtitle" id="volumeFormSubtitle"></p>
+    <div class="form-grid">
+      <div class="form-group"><label>卷號 *</label><input type="number" id="v-number" placeholder="1" min="1"></div>
+      <div class="form-group"><label>單行本標題</label><input type="text" id="v-title" placeholder="（選填副標題）"></div>
+      <div class="form-group full"><label>本卷簡介</label><textarea id="v-summary" rows="4" placeholder="這一卷的劇情概要…"></textarea></div>
+      <div class="form-group"><label>封面圖片網址</label><input type="text" id="v-cover" placeholder="https://…"></div>
+      <div class="form-group"><label>ISBN</label><input type="text" id="v-isbn" placeholder="978-4-08-883644-7"></div>
+      <div class="form-group"><label>出版日期</label><input type="date" id="v-date"></div>
+      <div class="form-group"><label>頁數</label><input type="number" id="v-pages" placeholder="192"></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn" onclick="closeVolumeForm()">取消</button>
+      <button class="btn primary" id="volumeFormSubmitBtn" onclick="submitVolume()">儲存</button>
     </div>
   </div>
 </div>
@@ -584,56 +309,45 @@ select option { background: var(--bg3); }
 <div class="toast" id="toast"></div>
 
 <script>
-const SUPABASE_URL = 'https://lzyplcvyinipkghfdvtx.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6eXBsY3Z5aW5pcGtnaGZkdnR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0ODgzNzUsImV4cCI6MjA4OTA2NDM3NX0.vUqzwgb8r0twkxZ3ltgtfVdBfQVN92p9A1zDjzrFLF8';
-const H = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json' };
+const SURL='https://lzyplcvyinipkghfdvtx.supabase.co';
+const SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6eXBsY3Z5aW5pcGtnaGZkdnR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0ODgzNzUsImV4cCI6MjA4OTA2NDM3NX0.vUqzwgb8r0twkxZ3ltgtfVdBfQVN92p9A1zDjzrFLF8';
+const H={'apikey':SKEY,'Authorization':'Bearer '+SKEY,'Content-Type':'application/json'};
 
-let allManga = [], currentManga = null, filters = { status: '', search: '' };
+let allManga=[],currentManga=null,editingManga=null,editingVolume=null,filterStatus='';
 
-async function api(path) {
-  const r = await fetch(SUPABASE_URL + '/rest/v1/' + path, { headers: H });
+async function api(path,opts={}){
+  const r=await fetch(SURL+'/rest/v1/'+path,{headers:H,...opts});
+  if(opts.method&&opts.method!=='GET'&&r.status<300)return r;
   return r.json();
 }
 
-async function loadStats() {
-  const [m, v] = await Promise.all([
-    api('manga?select=id'),
-    api('volumes?select=id')
-  ]);
-  document.getElementById('stat-manga').textContent = Array.isArray(m) ? m.length : 0;
-  document.getElementById('stat-volumes').textContent = Array.isArray(v) ? v.length : 0;
+async function loadStats(){
+  const[m,v]=await Promise.all([api('manga?select=id'),api('volumes?select=id')]);
+  document.getElementById('stat-manga').textContent=Array.isArray(m)?m.length:0;
+  document.getElementById('stat-volumes').textContent=Array.isArray(v)?v.length:0;
 }
 
-async function loadManga() {
-  const data = await api('manga?select=*&order=created_at.desc');
-  allManga = Array.isArray(data) ? data : [];
+async function loadManga(){
+  const data=await api('manga?select=*&order=created_at.desc');
+  allManga=Array.isArray(data)?data:[];
   renderGrid();
 }
 
-function renderGrid() {
-  const q = filters.search.toLowerCase();
-  let list = allManga.filter(m => {
-    const matchStatus = !filters.status || m.status === filters.status;
-    const matchSearch = !q ||
-      (m.title_zh||'').toLowerCase().includes(q) ||
-      (m.title_ja||'').toLowerCase().includes(q) ||
-      (m.writer||'').toLowerCase().includes(q) ||
-      (m.publisher||'').toLowerCase().includes(q);
-    return matchStatus && matchSearch;
+function renderGrid(){
+  const q=document.getElementById('search').value.toLowerCase();
+  let list=allManga.filter(m=>{
+    const ms=!filterStatus||m.status===filterStatus;
+    const mq=!q||(m.title_zh||'').toLowerCase().includes(q)||(m.title_ja||'').toLowerCase().includes(q)||(m.writer||'').toLowerCase().includes(q)||(m.publisher||'').toLowerCase().includes(q);
+    return ms&&mq;
   });
-  const grid = document.getElementById('grid');
-  document.getElementById('result-count').textContent = list.length + ' 部';
-  if (!list.length) {
-    grid.innerHTML = '<div class="empty">沒有找到相關漫畫</div>';
-    return;
-  }
-  grid.innerHTML = list.map(m => `
+  document.getElementById('result-count').textContent=list.length+' 部';
+  const grid=document.getElementById('grid');
+  if(!list.length){grid.innerHTML='<div class="empty">沒有找到相關漫畫</div>';return;}
+  grid.innerHTML=list.map(m=>`
     <div class="card" onclick="openDetail('${m.id}')">
       <div class="card-cover">
-        ${m.cover_url
-          ? `<img src="${m.cover_url}" alt="${m.title_zh}" loading="lazy">`
-          : `<div class="card-cover-placeholder">NO COVER</div>`}
-        <span class="status-badge ${statusClass(m.status)}">${statusLabel(m.status)}</span>
+        ${m.cover_url?`<img src="${m.cover_url}" alt="${esc(m.title_zh)}" loading="lazy">`:`<div class="card-cover-placeholder">NO COVER</div>`}
+        <span class="status-badge ${sClass(m.status)}">${sLabel(m.status)}</span>
       </div>
       <div class="card-body">
         <p class="card-title">${m.title_zh||'—'}</p>
@@ -641,184 +355,275 @@ function renderGrid() {
         <p class="card-author">${m.writer||''}</p>
         <div class="card-tags">${(m.genres||[]).slice(0,3).map(g=>`<span class="tag">${g}</span>`).join('')}</div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-function statusClass(s) {
-  if (s==='连载中') return 'status-ongoing';
-  if (s==='完结') return 'status-complete';
-  return 'status-hiatus';
-}
-function statusLabel(s) {
-  if (s==='连载中') return '連載中';
-  if (s==='完结') return '完結';
-  if (s==='休刊') return '休刊';
-  return s||'';
-}
+function sClass(s){return s==='连载中'?'status-ongoing':s==='完结'?'status-complete':'status-hiatus';}
+function sLabel(s){return s==='连载中'?'連載中':s==='完结'?'完結':s==='休刊'?'休刊':s||'';}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-function setFilter(key, val) {
-  filters[key] = val;
-  document.querySelectorAll('.chip').forEach(c => {
-    c.classList.toggle('active', c.textContent.trim() === (val===''?'全部': val==='连载中'?'連載中': val==='完结'?'完結':'休刊'));
-  });
+function setFilter(val){
+  filterStatus=val;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  event.currentTarget.classList.add('active');
   renderGrid();
 }
+document.getElementById('search').addEventListener('input',renderGrid);
 
-document.getElementById('search').addEventListener('input', e => {
-  filters.search = e.target.value;
-  renderGrid();
-});
-
-async function openDetail(id) {
-  const m = allManga.find(x => x.id === id);
-  if (!m) return;
-  currentManga = m;
-  document.getElementById('d-cover').src = m.cover_url || '';
-  document.getElementById('d-cover').style.display = m.cover_url ? 'block' : 'none';
-  document.getElementById('d-status-badge').innerHTML = `<span class="status-badge ${statusClass(m.status)}" style="position:static;display:inline-block;margin-bottom:8px">${statusLabel(m.status)}</span>`;
-  document.getElementById('d-title').textContent = m.title_zh || '—';
-  document.getElementById('d-ja').textContent = m.title_ja || '';
-  document.getElementById('xmlOutput').style.display = 'none';
-  const meta = [
-    ['作者', m.writer],
-    ['作畫', m.penciller !== m.writer ? m.penciller : null],
-    ['出版社', m.publisher],
-    ['刊物', m.imprint],
-    ['年份', m.start_year],
-    ['分級', m.age_rating],
-    ['繁中卷數', m.volume_count ? m.volume_count + ' 卷' : null],
-    ['日文卷數', m.jp_vol ? m.jp_vol + ' 卷' : null],
+async function openDetail(id){
+  const m=allManga.find(x=>x.id===id);
+  if(!m)return;
+  currentManga=m;
+  const cw=document.getElementById('d-cover-wrap');
+  cw.innerHTML=m.cover_url?`<img src="${m.cover_url}" alt="">`:`<div class="modal-cover-ph">NO COVER</div>`;
+  document.getElementById('d-status-badge').innerHTML=`<span class="status-badge ${sClass(m.status)}" style="position:static;display:inline-block">${sLabel(m.status)}</span>`;
+  document.getElementById('d-title').textContent=m.title_zh||'—';
+  document.getElementById('d-ja').textContent=m.title_ja||'';
+  document.getElementById('xmlOutput').style.display='none';
+  const rows=[
+    ['作者',m.writer],
+    ['作畫',m.penciller&&m.penciller!==m.writer?m.penciller:null],
+    ['出版社',m.publisher],
+    ['刊物',m.imprint],
+    ['年份',m.start_year?(m.start_year+(m.start_month?' / '+m.start_month+'月':'')):null],
+    ['分級',m.age_rating],
+    ['總卷數',m.volume_count?m.volume_count+' 卷':null],
+    ['評分',m.rating?m.rating+' / 5':null],
+    ['官網',m.web_url?`<a href="${m.web_url}" target="_blank" style="color:var(--accent)">${m.web_url}</a>`:null],
   ].filter(r=>r[1]);
-  document.getElementById('d-meta').innerHTML = meta.map(r=>`
-    <div class="meta-row"><span class="meta-key">${r[0]}</span><span class="meta-val">${r[1]}</span></div>
-  `).join('');
-  document.getElementById('d-summary').textContent = m.summary || '暫無簡介';
-  const allTags = [...(m.genres||[]), ...(m.tags||[])];
-  document.getElementById('d-genres').innerHTML = allTags.map(t=>`<span class="genre-tag">${t}</span>`).join('');
-  const vols = await api(`volumes?manga_id=eq.${id}&order=volume_number.asc`);
-  const vDiv = document.getElementById('d-volumes');
-  if (!Array.isArray(vols) || !vols.length) {
-    vDiv.innerHTML = '<p class="no-volumes">暫無單行本資料</p>';
-  } else {
-    vDiv.innerHTML = vols.map(v => `
-      <div class="volume-item">
-        <div class="vol-cover">
-          ${v.cover_url ? `<img src="${v.cover_url}" alt="">` : `<div class="vol-cover-ph">Vol.${v.volume_number}</div>`}
-        </div>
-        <div class="vol-info">
-          <p class="vol-num">VOL.${v.volume_number}</p>
-          <p class="vol-title">${v.title || '第 '+v.volume_number+' 卷'}</p>
-          ${v.summary ? `<p class="vol-summary">${v.summary}</p>` : ''}
-          <p class="vol-meta">${[v.publish_date, v.isbn ? 'ISBN: '+v.isbn : '', v.page_count ? v.page_count+'頁' : ''].filter(Boolean).join(' · ')}</p>
-        </div>
-      </div>
-    `).join('');
-  }
+  document.getElementById('d-meta').innerHTML=rows.map(r=>`<div class="meta-row"><span class="meta-key">${r[0]}</span><span class="meta-val">${r[1]}</span></div>`).join('');
+  document.getElementById('d-summary').textContent=m.summary||'暫無簡介';
+  const tags=[...(m.genres||[]),...(m.tags||[])];
+  document.getElementById('d-genres').innerHTML=tags.map(t=>`<span class="genre-tag">${t}</span>`).join('');
+  document.getElementById('d-genres-section').style.display=tags.length?'block':'none';
+  await loadVolumes(id);
   document.getElementById('detailOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
 
-function closeDetail(e) {
-  if (e.target === document.getElementById('detailOverlay')) closeDetailBtn();
-}
-function closeDetailBtn() {
-  document.getElementById('detailOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function exportXML() {
-  const m = currentManga; if (!m) return;
-  const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const xml = `<?xml version="1.0" encoding="utf-8"?>
-<ComicInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Series>${esc(m.title_zh)}</Series>
-  <LocalizedSeries>${esc(m.title_ja)}</LocalizedSeries>
-  <Summary>${esc(m.summary)}</Summary>
-  <Publisher>${esc(m.publisher)}</Publisher>
-  <Imprint>${esc(m.imprint)}</Imprint>
-  <Writer>${esc(m.writer)}</Writer>
-  <Penciller>${esc(m.penciller||m.writer)}</Penciller>
-  <CoverArtist>${esc(m.cover_artist||m.writer)}</CoverArtist>
-  <Genre>${esc((m.genres||[]).join(','))}</Genre>
-  <Tags>${esc((m.tags||[]).join(','))}</Tags>
-  <Web>${esc(m.web_url)}</Web>
-  <AgeRating>${esc(m.age_rating)}</AgeRating>
-  <BlackAndWhite>${m.is_bw ? 'Yes' : 'No'}</BlackAndWhite>
-  <Manga>${esc(m.manga_direction||'YesAndRightToLeft')}</Manga>
-  <LanguageISO>${esc(m.language||'ja')}</LanguageISO>
-  <Count>${m.volume_count||''}</Count>
-  <Year>${m.start_year||''}</Year>
-  <Month>${m.start_month||''}</Month>
-  <CommunityRating>${m.rating||''}</CommunityRating>
-  <Notes>${esc(m.notes)}</Notes>
-</ComicInfo>`;
-  const out = document.getElementById('xmlOutput');
-  out.textContent = xml;
-  out.style.display = 'block';
-  const blob = new Blob([xml], {type:'application/xml'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = (m.title_zh||'manga') + '_ComicInfo.xml';
-  a.click();
-  showToast('✓ ComicInfo.xml 已下載', 'success');
+async function loadVolumes(mangaId){
+  const vols=await api(`volumes?manga_id=eq.${mangaId}&order=volume_number.asc`);
+  const vDiv=document.getElementById('d-volumes');
+  if(!Array.isArray(vols)||!vols.length){vDiv.innerHTML='<p class="no-volumes">暫無單行本資料，點上方「+ 新增單行本」開始添加</p>';return;}
+  vDiv.innerHTML=vols.map(v=>`
+    <div class="volume-item">
+      <div class="vol-cover">${v.cover_url?`<img src="${v.cover_url}" alt="">`:`<div class="vol-cover-ph">Vol.${v.volume_number}</div>`}</div>
+      <div class="vol-info">
+        <p class="vol-num">VOL.${v.volume_number}</p>
+        <p class="vol-title">${v.title||'第 '+v.volume_number+' 卷'}</p>
+        ${v.summary?`<p class="vol-summary">${v.summary}</p>`:''}
+        <p class="vol-meta">${[v.publish_date,v.isbn?'ISBN: '+v.isbn:'',v.page_count?v.page_count+'頁':''].filter(Boolean).join(' · ')}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">
+        <button class="vol-edit-btn" onclick="openVolumeForm(${JSON.stringify(v).replace(/"/g,'&quot;')})">編輯</button>
+        <button class="vol-edit-btn" onclick='exportXML(${JSON.stringify(v).replace(/'/g,"&#39;")})'>XML</button>
+      </div>
+    </div>`).join('');
 }
 
-function copyAPI() {
-  const m = currentManga; if (!m) return;
-  const url = `${SUPABASE_URL}/rest/v1/manga?id=eq.${m.id}&select=*`;
-  navigator.clipboard.writeText(url);
-  showToast('✓ API 網址已複製', 'success');
+function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');document.body.style.overflow='';}
+
+/* MANGA FORM */
+function openMangaForm(manga=null){
+  editingManga=manga;
+  const isEdit=!!manga;
+  document.getElementById('mangaFormTitle').textContent=isEdit?'編輯漫畫資料':'提交新漫畫';
+  document.getElementById('mangaFormSubmitBtn').textContent=isEdit?'儲存變更':'提交';
+  const f=(id,val)=>{const el=document.getElementById(id);if(el)el.value=val||'';};
+  f('f-title-zh',isEdit?manga.title_zh:'');
+  f('f-title-ja',isEdit?manga.title_ja:'');
+  f('f-writer',isEdit?manga.writer:'');
+  f('f-penciller',isEdit?manga.penciller:'');
+  f('f-publisher',isEdit?manga.publisher:'');
+  f('f-imprint',isEdit?manga.imprint:'');
+  f('f-cover',isEdit?manga.cover_url:'');
+  f('f-year',isEdit?manga.start_year:'');
+  f('f-month',isEdit?manga.start_month:'');
+  f('f-count',isEdit?manga.volume_count:'');
+  f('f-web',isEdit?manga.web_url:'');
+  f('f-rating',isEdit?manga.rating:'');
+  f('f-summary',isEdit?manga.summary:'');
+  f('f-notes',isEdit?manga.notes:'');
+  f('f-genres',isEdit?(manga.genres||[]).join(', '):'');
+  f('f-tags',isEdit?(manga.tags||[]).join(', '):'');
+  if(isEdit){
+    document.getElementById('f-status').value=manga.status||'连载中';
+    document.getElementById('f-age').value=manga.age_rating||'Everyone';
+  }else{
+    document.getElementById('f-status').value='连载中';
+    document.getElementById('f-age').value='Everyone';
+  }
+  document.getElementById('mangaFormOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
 }
+function closeMangaForm(){document.getElementById('mangaFormOverlay').classList.remove('open');document.body.style.overflow='';}
 
-function openSubmit() { document.getElementById('submitOverlay').classList.add('open'); document.body.style.overflow='hidden'; }
-function closeSubmit() { document.getElementById('submitOverlay').classList.remove('open'); document.body.style.overflow=''; }
-function closeSubmitClick(e) { if(e.target===document.getElementById('submitOverlay')) closeSubmit(); }
-
-async function submitManga() {
-  const zh = document.getElementById('f-title-zh').value.trim();
-  if (!zh) { showToast('請填寫中文標題', 'error'); return; }
-  const genres = document.getElementById('f-genres').value.split(',').map(s=>s.trim()).filter(Boolean);
-  const tags = document.getElementById('f-tags').value.split(',').map(s=>s.trim()).filter(Boolean);
-  const penciller = document.getElementById('f-penciller').value.trim();
-  const writer = document.getElementById('f-writer').value.trim();
-  const body = {
-    title_zh: zh,
-    title_ja: document.getElementById('f-title-ja').value.trim()||null,
-    writer: writer||null,
-    penciller: penciller||writer||null,
-    publisher: document.getElementById('f-publisher').value.trim()||null,
-    imprint: document.getElementById('f-imprint').value.trim()||null,
-    status: document.getElementById('f-status').value,
-    age_rating: document.getElementById('f-age').value,
-    genres: genres.length ? genres : null,
-    tags: tags.length ? tags : null,
-    cover_url: document.getElementById('f-cover').value.trim()||null,
-    start_year: parseInt(document.getElementById('f-year').value)||null,
-    summary: document.getElementById('f-summary').value.trim()||null,
+async function submitManga(){
+  const zh=document.getElementById('f-title-zh').value.trim();
+  if(!zh){showToast('請填寫中文標題','error');return;}
+  const writer=document.getElementById('f-writer').value.trim();
+  const penciller=document.getElementById('f-penciller').value.trim();
+  const genres=document.getElementById('f-genres').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const tags=document.getElementById('f-tags').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const body={
+    title_zh:zh,
+    title_ja:document.getElementById('f-title-ja').value.trim()||null,
+    writer:writer||null,
+    penciller:penciller||writer||null,
+    publisher:document.getElementById('f-publisher').value.trim()||null,
+    imprint:document.getElementById('f-imprint').value.trim()||null,
+    status:document.getElementById('f-status').value,
+    age_rating:document.getElementById('f-age').value,
+    genres:genres.length?genres:null,
+    tags:tags.length?tags:null,
+    cover_url:document.getElementById('f-cover').value.trim()||null,
+    start_year:parseInt(document.getElementById('f-year').value)||null,
+    start_month:parseInt(document.getElementById('f-month').value)||null,
+    volume_count:parseInt(document.getElementById('f-count').value)||null,
+    web_url:document.getElementById('f-web').value.trim()||null,
+    rating:parseFloat(document.getElementById('f-rating').value)||null,
+    summary:document.getElementById('f-summary').value.trim()||null,
+    notes:document.getElementById('f-notes').value.trim()||null,
   };
-  const r = await fetch(SUPABASE_URL+'/rest/v1/manga', {
-    method:'POST', headers:{...H,'Prefer':'return=minimal'}, body:JSON.stringify(body)
-  });
-  if (r.ok) {
-    showToast('✓ 提交成功！', 'success');
-    closeSubmit();
+  let r;
+  if(editingManga){
+    r=await api(`manga?id=eq.${editingManga.id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)});
+  }else{
+    r=await api('manga',{method:'POST',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)});
+  }
+  if(r&&(r.ok!==false)){
+    showToast(editingManga?'✓ 資料已更新':'✓ 提交成功！','success');
+    closeMangaForm();
     await loadManga();
     await loadStats();
-  } else {
-    showToast('提交失敗，請稍後再試', 'error');
+    if(editingManga){
+      const updated=allManga.find(x=>x.id===editingManga.id);
+      if(updated)openDetail(updated.id);
+    }
+  }else{
+    showToast('操作失敗，請稍後再試','error');
   }
 }
 
-function showToast(msg, type='') {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast ' + type;
-  setTimeout(() => t.classList.add('show'), 10);
-  setTimeout(() => t.classList.remove('show'), 3000);
+/* VOLUME FORM */
+function openVolumeForm(vol=null){
+  editingVolume=vol;
+  const isEdit=!!vol;
+  document.getElementById('volumeFormTitle').textContent=isEdit?'編輯單行本':'新增單行本';
+  document.getElementById('volumeFormSubtitle').textContent=currentManga?(currentManga.title_zh||''):'';
+  document.getElementById('volumeFormSubmitBtn').textContent=isEdit?'儲存變更':'新增';
+  const f=(id,val)=>{const el=document.getElementById(id);if(el)el.value=val||'';};
+  f('v-number',isEdit?vol.volume_number:'');
+  f('v-title',isEdit?vol.title:'');
+  f('v-summary',isEdit?vol.summary:'');
+  f('v-cover',isEdit?vol.cover_url:'');
+  f('v-isbn',isEdit?vol.isbn:'');
+  f('v-date',isEdit?vol.publish_date:'');
+  f('v-pages',isEdit?vol.page_count:'');
+  document.getElementById('volumeFormOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeVolumeForm(){document.getElementById('volumeFormOverlay').classList.remove('open');document.body.style.overflow='';}
+
+async function submitVolume(){
+  const num=parseInt(document.getElementById('v-number').value);
+  if(!num){showToast('請填寫卷號','error');return;}
+  if(!currentManga){showToast('找不到漫畫資料','error');return;}
+  const body={
+    manga_id:currentManga.id,
+    volume_number:num,
+    title:document.getElementById('v-title').value.trim()||null,
+    summary:document.getElementById('v-summary').value.trim()||null,
+    cover_url:document.getElementById('v-cover').value.trim()||null,
+    isbn:document.getElementById('v-isbn').value.trim()||null,
+    publish_date:document.getElementById('v-date').value||null,
+    page_count:parseInt(document.getElementById('v-pages').value)||null,
+  };
+  let r;
+  if(editingVolume){
+    r=await api(`volumes?id=eq.${editingVolume.id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)});
+  }else{
+    r=await api('volumes',{method:'POST',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)});
+  }
+  if(r&&(r.ok!==false)){
+    showToast(editingVolume?'✓ 單行本已更新':'✓ 單行本已新增','success');
+    closeVolumeForm();
+    await loadVolumes(currentManga.id);
+    await loadStats();
+  }else{
+    showToast('操作失敗，請稍後再試','error');
+  }
 }
 
-loadStats();
-loadManga();
+/* XML EXPORT */
+function buildXML(m, vol){
+  const x=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  // 日期解析
+  let year='', month='', day='';
+  if(vol && vol.publish_date){
+    const parts = vol.publish_date.split('-');
+    year=parts[0]||''; month=parts[1]||''; day=parts[2]||'';
+  } else {
+    year=m.start_year||''; month=m.start_month||'';
+  }
+  // 單行本簡介優先，沒有則用系列簡介
+  const summary = (vol && vol.summary) ? vol.summary : (m.summary||'');
+  return `<?xml version="1.0" encoding="utf-8"?>
+<ComicInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Series>${x(m.title_zh)}</Series>
+  <LocalizedSeries>${x(m.title_ja)}</LocalizedSeries>
+  <Number>${vol ? vol.volume_number : ''}</Number>
+  <Count>${m.volume_count||''}</Count>
+  <Summary>${x(summary)}</Summary>
+  <Publisher>${x(m.publisher)}</Publisher>
+  <Imprint>${x(m.imprint)}</Imprint>
+  <Writer>${x(m.writer)}</Writer>
+  <Penciller>${x(m.penciller||m.writer)}</Penciller>
+  <CoverArtist>${x(m.cover_artist||m.writer)}</CoverArtist>
+  <Genre>${x((m.genres||[]).join(','))}</Genre>
+  <Tags>${x((m.tags||[]).join(','))}</Tags>
+  <Web>${x(m.web_url)}</Web>
+  <AgeRating>${x(m.age_rating)}</AgeRating>
+  <BlackAndWhite>${m.is_bw?'Yes':'No'}</BlackAndWhite>
+  <Manga>${x(m.manga_direction||'YesAndRightToLeft')}</Manga>
+  <LanguageISO>${x(m.language||'ja')}</LanguageISO>
+  <Year>${year}</Year>
+  <Month>${month}</Month>
+  <Day>${day}</Day>
+  <CommunityRating>${m.rating||''}</CommunityRating>
+  <Notes>${x(m.notes)}</Notes>
+</ComicInfo>`;
+}
+
+function exportXML(vol){
+  const m=currentManga;if(!m)return;
+  const xml = buildXML(m, vol||null);
+  const out=document.getElementById('xmlOutput');
+  out.textContent=xml;out.style.display='block';
+  const volNum = vol ? `_Vol${vol.volume_number}` : '';
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([xml],{type:'application/xml'}));
+  a.download=(m.title_zh||'manga')+volNum+'_ComicInfo.xml';
+  a.click();
+  showToast('✓ ComicInfo.xml 已下載','success');
+}
+
+function copyAPI(){
+  const m=currentManga;if(!m)return;
+  navigator.clipboard.writeText(`${SURL}/rest/v1/manga?id=eq.${m.id}&select=*`);
+  showToast('✓ API 網址已複製','success');
+}
+
+function overlayClick(e,id,closeFn){if(e.target===document.getElementById(id))closeFn();}
+
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+type;
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+loadStats();loadManga();
 </script>
 </body>
 </html>
