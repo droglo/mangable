@@ -78,7 +78,13 @@ header{position:sticky;top:0;z-index:200;background:rgba(14,14,14,.95);backdrop-
 .smore:hover{color:var(--accent3);}
 
 /* 最近更新 */
-.recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;margin-bottom:32px;}
+.recent-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:14px;margin-bottom:36px;}
+@media(max-width:1600px){.recent-grid{grid-template-columns:repeat(8,1fr);}}
+@media(max-width:1200px){.recent-grid{grid-template-columns:repeat(6,1fr);}}
+@media(max-width:800px){.recent-grid{grid-template-columns:repeat(4,1fr);}}
+@media(max-width:500px){.recent-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:2400px){.recent-grid{grid-template-columns:repeat(14,1fr);}}
+@media(min-width:3200px){.recent-grid{grid-template-columns:repeat(20,1fr);}}
 .rc{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;}
 .rc:hover{transform:translateY(-3px);border-color:var(--border2);}
 .rc-cover{width:100%;aspect-ratio:2/3;background:var(--bg3);position:relative;}
@@ -169,13 +175,17 @@ header{position:sticky;top:0;z-index:200;background:rgba(14,14,14,.95);backdrop-
 .vvbtn{background:none;border:1px solid var(--border2);border-radius:4px;padding:3px 10px;font-size:12px;color:var(--text3);transition:all .15s;}
 .vvbtn.on{border-color:var(--accent);color:var(--accent);}
 .vols-list{display:flex;flex-direction:column;gap:10px;}
-.vol-item{display:flex;gap:14px;padding:12px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);}
+.vol-item{display:flex;gap:14px;padding:14px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);height:160px;overflow:hidden;transition:height .3s ease;}
+.vol-item.expanded{height:auto;}
 .vi-cover{width:96px;flex-shrink:0;aspect-ratio:2/3;border-radius:6px;overflow:hidden;background:var(--bg3);}
 .vi-cover img{width:100%;height:100%;object-fit:cover;}
 .vi-info{flex:1;min-width:0;}
 .vi-num{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:2px;}
 .vi-title{font-size:14px;font-weight:500;margin-bottom:5px;}
-.vi-summary{font-size:13px;color:var(--text2);line-height:1.65;white-space:pre-line;}
+.vi-summary{font-size:13px;color:var(--text2);line-height:1.65;white-space:pre-line;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;}
+.vol-item.expanded .vi-summary{display:block;overflow:visible;-webkit-line-clamp:unset;}
+.read-more{background:none;border:none;color:var(--accent);font-size:12px;padding:4px 0 0;cursor:pointer;display:block;}
+.read-more:hover{color:var(--accent3);}
 .vi-meta{font-size:12px;color:var(--text3);margin-top:5px;}
 .vi-btns{display:flex;flex-direction:column;gap:4px;flex-shrink:0;}
 .vibtn{background:none;border:1px solid var(--border2);border-radius:4px;color:var(--text3);font-size:11px;padding:3px 9px;transition:all .15s;}
@@ -539,10 +549,27 @@ async function loadNews(){
 }
 
 // ── HOME: RECENT ──────────────────────────────────────────
+function getRecentCols(){
+  // 與 CSS @media 斷點完全一致
+  const w=window.innerWidth;
+  if(w>3200) return 20;
+  if(w>2400) return 14;
+  if(w>1600) return 10;
+  if(w>1200) return 8;
+  if(w>800)  return 6;
+  if(w>500)  return 4;
+  return 3;
+}
 async function loadRecent(){
-  // manga.cover_url 已由爬蟲自動更新為最新卷封面
-  const mangas=await api('manga?select=id,title_zh,cover_url,latest_release,volume_count,status&order=latest_release.desc.nullslast&limit=20');
+  // 先插入一個佔位元素，讓 CSS 渲染網格，再讀取實際列數
   const grid=document.getElementById('recentGrid');
+  grid.innerHTML='<div style="visibility:hidden;aspect-ratio:2/3;width:100%"></div>';
+  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+  const colsStr=getComputedStyle(grid).gridTemplateColumns;
+  const cols=colsStr.trim().split(/\s+/).length||10;
+  const limit=cols*2;
+  grid.innerHTML=`<div class="loading-row" style="grid-column:1/-1"><div class="spin"></div>載入中…</div>`;
+  const mangas=await api(`manga?select=id,title_zh,cover_url,latest_release,volume_count,status&order=latest_release.desc.nullslast&limit=${limit}`);
   if(!Array.isArray(mangas)||!mangas.length){grid.innerHTML='<div style="color:var(--text3);font-size:13px">暫無資料</div>';return;}
   const now=new Date();
   grid.innerHTML=mangas.map(m=>{
@@ -793,20 +820,23 @@ function renderVols(){
   const wrap=document.getElementById('volsWrap');if(!wrap)return;
   if(!state.currentVols.length){wrap.innerHTML='<p class="no-vols">暫無單行本資料</p>';return;}
   if(state.volView==='list'){
-    wrap.innerHTML=`<div class="vols-list">${state.currentVols.map(v=>`
-      <div class="vol-item">
+    wrap.innerHTML=`<div class="vols-list">${state.currentVols.map(v=>{
+      const hasSummary=v.summary&&v.summary.length>80;
+      return `<div class="vol-item" id="vi-${v.volume_number}">
         <div class="vi-cover">${v.cover_url?`<img src="${esc(v.cover_url)}" alt="" loading="lazy">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:10px;font-family:var(--mono)">'+v.volume_number+'</div>'}</div>
         <div class="vi-info">
           <p class="vi-num">VOL.${v.volume_number}</p>
           <p class="vi-title">${esc(v.title||'第 '+v.volume_number+' 卷')}</p>
           ${v.summary?`<p class="vi-summary">${esc(v.summary)}</p>`:''}
+          ${hasSummary?`<button class="read-more" onclick="toggleVolExpand(${v.volume_number},this)">展開更多 ▾</button>`:''}
           <p class="vi-meta">${['發售日期：'+(formatDate(v.publish_date)||'—'),v.isbn?'ISBN: '+v.isbn:'',v.page_count?v.page_count+'頁':''].filter((x,i)=>i===0||x).join(' · ')}</p>
         </div>
         <div class="vi-btns">
           <button class="vibtn" onclick='openVolForm(${JSON.stringify(v).replace(/"/g,"&quot;")})'>編輯</button>
           <button class="vibtn" onclick='exportXML(${JSON.stringify(v).replace(/"/g,"&quot;")})'>XML</button>
         </div>
-      </div>`).join('')}</div>`;
+      </div>`;
+    }).join('')}</div>`;
   } else {
     wrap.innerHTML=`<div class="vols-grid">${state.currentVols.map(v=>`
       <div class="vg" onclick='openVolPopup(${JSON.stringify(v).replace(/"/g,"&quot;")})'>
@@ -818,6 +848,12 @@ function renderVols(){
   }
 }
 
+function toggleVolExpand(volNum, btn){
+  const item=document.getElementById('vi-'+volNum);
+  if(!item) return;
+  const expanded=item.classList.toggle('expanded');
+  btn.textContent=expanded?'收起 ▴':'展開更多 ▾';
+}
 function setVolView(v){
   state.volView=v;
   document.getElementById('vvList').classList.toggle('on',v==='list');
@@ -1138,6 +1174,14 @@ window.addEventListener('popstate',e=>{
     await Promise.all([loadBanner(),loadNews(),loadRecent(),loadCategories()]);
   }
 })();
+
+let _resizeTimer;
+window.addEventListener('resize',()=>{
+  clearTimeout(_resizeTimer);
+  _resizeTimer=setTimeout(()=>{
+    if(state.page==='home') loadRecent();
+  },400);
+});
 </script>
 </body>
 </html>
