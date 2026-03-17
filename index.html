@@ -4,758 +4,919 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MANGABLE — 日本漫畫中文資料庫</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0e0e0e;--bg2:#161616;--bg3:#1e1e1e;--border:#2a2a2a;--border2:#333;
-  --text:#f0ede6;--text2:#a09890;--text3:#5a5450;
-  --accent:#e8c97a;--accent2:#c4a855;--red:#e85d4a;--green:#4caf7d;--blue:#5b9bd5;
-  --font-display:'Noto Serif TC',serif;--font-body:'Noto Sans TC',sans-serif;--font-mono:'Space Mono',monospace;
+  --bg:#0e0e0e;--bg2:#131313;--bg3:#1a1a1a;--bg4:#222;
+  --border:#1e1e1e;--border2:#2a2a2a;--border3:#333;
+  --text:#f0ede6;--text2:#a09890;--text3:#5a5450;--text4:#333;
+  --accent:#e8c97a;--accent2:#c4a855;--accent3:#f5dfa0;
+  --green:#4caf7d;--blue:#5b9bd5;--red:#e85d4a;
+  --mono:'Space Mono',monospace;--serif:'Noto Serif TC',serif;--sans:'Noto Sans TC',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.75;min-height:100vh;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.75;min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:var(--sans);}
 
-/* HEADER */
-header{position:sticky;top:0;z-index:100;background:rgba(14,14,14,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;gap:1.5rem;height:56px;}
-.logo{font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--accent);letter-spacing:.15em;text-decoration:none;white-space:nowrap;cursor:pointer;}
-.logo span{color:var(--text3);font-weight:400;}
-.search-wrap{flex:1;max-width:480px;position:relative;}
-.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text3);}
-#search{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:7px 12px 7px 34px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;transition:border-color .2s;}
-#search:focus{border-color:var(--accent2);}
-#search::placeholder{color:var(--text3);}
-nav{display:flex;gap:.25rem;margin-left:auto;align-items:center;}
-.nav-btn{background:none;border:none;cursor:pointer;color:var(--text2);font-family:var(--font-body);font-size:13px;padding:0 .875rem;height:56px;transition:color .2s;text-decoration:none;display:flex;align-items:center;}
-.nav-btn:hover{color:var(--text);}
-.nav-btn.primary{background:var(--accent);color:#000;font-weight:500;border-radius:6px;height:32px;padding:0 1rem;}
-.nav-btn.primary:hover{background:var(--accent2);}
+/* ── HEADER ── */
+header{position:sticky;top:0;z-index:200;background:rgba(14,14,14,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 28px;gap:16px;}
+.logo{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--accent);letter-spacing:.15em;cursor:pointer;white-space:nowrap;}
+.logo span{color:var(--text4);font-weight:400;}
+.search-wrap{flex:1;max-width:440px;position:relative;}
+.search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text3);pointer-events:none;}
+#searchInput{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:8px 14px 8px 34px;color:var(--text);font-family:var(--sans);font-size:14px;outline:none;transition:border-color .2s;}
+#searchInput:focus{border-color:var(--accent2);}
+#searchInput::placeholder{color:var(--text3);}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:6px;}
+.hbtn{background:none;border:none;color:var(--text2);font-size:13px;padding:6px 12px;border-radius:5px;transition:color .2s;}
+.hbtn:hover{color:var(--text);}
+.hbtn.pri{background:var(--accent);color:#000;font-weight:500;}
+.hbtn.pri:hover{background:var(--accent2);}
 
-/* HERO */
-.hero{padding:3rem 2rem 2rem;border-bottom:1px solid var(--border);}
-.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.2;margin-bottom:.5rem;}
-.hero h1 em{color:var(--accent);font-style:normal;}
-.hero p{color:var(--text2);font-size:13px;max-width:480px;}
-.stats-row{display:flex;gap:2rem;margin-top:1.5rem;}
-.stat{display:flex;flex-direction:column;gap:2px;}
-.stat-num{font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--accent);}
-.stat-label{font-size:12px;color:var(--text3);letter-spacing:.05em;}
+/* ── PAGES ── */
+.page{display:none;}
+.page.active{display:block;}
 
-/* FILTERS */
-.filters{padding:1rem 2rem;border-bottom:1px solid var(--border);display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;}
-.filter-label{font-size:11px;color:var(--text3);margin-right:.25rem;letter-spacing:.05em;}
-.chip{background:none;border:1px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .15s;font-family:var(--font-body);}
-.chip:hover{border-color:var(--accent2);color:var(--text);}
-.chip.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:500;}
+/* ── HOME: BANNER ── */
+.banner-outer{position:relative;overflow:hidden;background:var(--bg2);border-bottom:1px solid var(--border);}
+.banner-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.banner-slide{min-width:100%;height:260px;display:flex;align-items:center;padding:0 32px;position:relative;overflow:hidden;}
+.slide-content{position:relative;z-index:2;max-width:420px;}
+.slide-tag{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.12em;margin-bottom:8px;}
+.slide-title{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;line-height:1.2;margin-bottom:6px;}
+.slide-sub{font-size:14px;color:var(--text2);margin-bottom:16px;}
+.slide-btn{display:inline-block;background:var(--accent);color:#000;font-size:13px;font-weight:500;padding:9px 22px;border-radius:6px;transition:background .15s;}
+.slide-btn:hover{background:var(--accent2);}
+.slide-cover{position:absolute;right:0;top:0;height:100%;width:260px;overflow:hidden;opacity:.25;}
+.slide-cover img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.banner-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:3;}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--border3);cursor:pointer;transition:background .2s,transform .2s;}
+.bdot.on{background:var(--accent);transform:scale(1.3);}
+.barr{position:absolute;top:50%;transform:translateY(-50%);z-index:3;background:rgba(0,0,0,.5);border:1px solid var(--border2);color:var(--text2);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;transition:color .2s;}
+.barr:hover{color:var(--text);}
+.barr.l{left:10px;}.barr.r{right:10px;}
+.banner-empty{height:80px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px;}
 
-/* GRID */
-.main{padding:1.5rem 2rem 3rem;}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
-.section-title{font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;}
-.result-count{font-size:13px;color:var(--text3);}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1.25rem;}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;text-decoration:none;color:inherit;display:block;}
-.card:hover{transform:translateY(-3px);border-color:var(--border2);}
-.card-cover{width:100%;aspect-ratio:2/3;background:var(--bg3);position:relative;overflow:hidden;}
-.card-cover img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
-.card:hover .card-cover img{transform:scale(1.04);}
-.card-cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px;font-family:var(--font-mono);}
-.status-badge{position:absolute;top:8px;left:8px;font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;font-family:var(--font-mono);}
-.status-ongoing{background:rgba(76,175,125,.2);color:#4caf7d;border:1px solid rgba(76,175,125,.3);}
-.status-complete{background:rgba(91,155,213,.2);color:#5b9bd5;border:1px solid rgba(91,155,213,.3);}
-.status-hiatus{background:rgba(232,93,74,.15);color:#e85d4a;border:1px solid rgba(232,93,74,.25);}
-.card-body{padding:10px 10px 12px;}
-.card-title{font-size:15px;font-weight:500;line-height:1.3;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.card-ja{font-size:13px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px;}
-.card-author{font-size:13px;color:var(--text2);}
-.card-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}
-.tag{font-size:12px;padding:1px 6px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;color:var(--text3);}
+/* ── HOME: NEWS ── */
+.news-bar{background:var(--bg2);border-bottom:1px solid var(--border);height:38px;display:flex;align-items:center;overflow:hidden;}
+.news-label{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em;padding:0 14px;border-right:1px solid var(--border2);white-space:nowrap;height:100%;display:flex;align-items:center;}
+.news-track{flex:1;overflow:hidden;height:100%;display:flex;align-items:center;}
+.news-inner{display:flex;white-space:nowrap;animation:ticker 30s linear infinite;}
+.news-inner:hover{animation-play-state:paused;}
+.ni{font-size:13px;color:var(--text2);padding:0 32px;}
+.ni b{color:var(--text);font-weight:400;}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.news-empty{flex:1;display:flex;align-items:center;padding:0 16px;font-size:12px;color:var(--text3);}
 
-.loading-row{grid-column:1/-1;display:flex;align-items:center;justify-content:center;padding:3rem;color:var(--text3);font-family:var(--font-mono);font-size:12px;gap:.75rem;}
-.spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+/* ── HOME: SECTIONS ── */
+.home-body{padding:24px 28px 48px;}
+.shdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.stitle{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;}
+.smore{background:none;border:none;font-size:12px;color:var(--accent);padding:0;}
+.smore:hover{color:var(--accent3);}
+
+/* 最近更新 */
+.recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;margin-bottom:32px;}
+.rc{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;}
+.rc:hover{transform:translateY(-3px);border-color:var(--border2);}
+.rc-cover{width:100%;aspect-ratio:2/3;background:var(--bg3);position:relative;}
+.rc-cover img{width:100%;height:100%;object-fit:cover;}
+.rc-new{position:absolute;top:6px;left:6px;background:var(--accent);color:#000;font-size:9px;font-weight:700;font-family:var(--mono);padding:2px 5px;border-radius:3px;}
+.rc-body{padding:9px 11px 11px;}
+.rc-vol{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:2px;}
+.rc-title{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rc-date{font-size:12px;color:var(--text3);margin-top:3px;}
+
+/* 分類 */
+.cat-section{margin-bottom:28px;}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
+.cat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:border-color .2s,background .2s;}
+.cat:hover{border-color:var(--border3);background:var(--bg3);}
+.cat-ico{width:38px;height:38px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.cat-name{font-size:14px;font-weight:500;}
+.cat-cnt{font-size:12px;color:var(--text3);margin-top:2px;}
+
+/* 狀態卡 */
+.status-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:28px;}
+.stc{border-radius:8px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:opacity .2s;}
+.stc:hover{opacity:.85;}
+.stc-label{font-size:13px;font-weight:500;}
+.stc-sub{font-size:11px;margin-top:2px;}
+.stc-num{font-family:var(--mono);font-size:20px;font-weight:700;}
+
+/* ── SEARCH PAGE ── */
+.search-page{padding:16px 24px 40px;}
+.search-top{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{background:none;border:1px solid var(--border2);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--text2);transition:all .15s;}
+.chip:hover{border-color:var(--border3);color:var(--text);}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#000;font-weight:500;}
+.result-info{font-size:12px;color:var(--text3);margin-left:auto;}
+.manga-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;}
+.mcard{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s;display:block;}
+.mcard:hover{transform:translateY(-3px);border-color:var(--border2);}
+.mcard-cover{width:100%;aspect-ratio:2/3;background:var(--bg3);position:relative;}
+.mcard-cover img{width:100%;height:100%;object-fit:cover;}
+.sbadge{position:absolute;top:7px;left:7px;font-size:10px;padding:2px 7px;border-radius:4px;font-family:var(--mono);}
+.s-on{background:rgba(76,175,125,.2);color:var(--green);border:1px solid rgba(76,175,125,.3);}
+.s-end{background:rgba(91,155,213,.2);color:var(--blue);border:1px solid rgba(91,155,213,.3);}
+.s-hi{background:rgba(232,93,74,.15);color:var(--red);border:1px solid rgba(232,93,74,.25);}
+.mcard-body{padding:11px 12px 13px;}
+.mcard-title{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
+.mcard-ja{font-size:12px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px;}
+.mcard-author{font-size:13px;color:var(--text2);}
+.mcard-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}
+.mtag{font-size:11px;padding:2px 7px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;color:var(--text3);}
+.load-more-sentinel{height:40px;grid-column:1/-1;}
+.loading-row{grid-column:1/-1;display:flex;align-items:center;justify-content:center;padding:2rem;gap:10px;color:var(--text3);font-family:var(--mono);font-size:12px;}
+.spin{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.empty{grid-column:1/-1;text-align:center;padding:4rem;color:var(--text3);font-size:13px;}
-#load-more-trigger{height:40px;grid-column:1/-1;}
+.empty-msg{grid-column:1/-1;text-align:center;padding:4rem;color:var(--text3);font-size:13px;}
 
-/* DETAIL PAGE */
-#detail-page{display:none;min-height:100vh;}
-#detail-page.active{display:block;}
-#list-page{display:block;}
-#list-page.hidden{display:none;}
-
-.detail-hero{display:flex;gap:2rem;padding:2rem;border-bottom:1px solid var(--border);}
-.detail-cover{width:180px;flex-shrink:0;aspect-ratio:2/3;border-radius:8px;overflow:hidden;background:var(--bg3);}
-.detail-cover img{width:100%;height:100%;object-fit:cover;}
-.detail-cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px;font-family:var(--font-mono);}
-.detail-info{flex:1;min-width:0;}
-.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);cursor:pointer;margin-bottom:1rem;background:none;border:none;font-family:var(--font-body);padding:0;transition:color .2s;}
+/* ── DETAIL PAGE ── */
+.detail-hero{display:flex;gap:24px;padding:24px;border-bottom:1px solid var(--border);}
+.det-cover{width:180px;flex-shrink:0;aspect-ratio:2/3;border-radius:8px;overflow:hidden;background:var(--bg3);}
+.det-cover img{width:100%;height:100%;object-fit:cover;}
+.det-info{flex:1;min-width:0;}
+.back-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--text3);background:none;border:none;padding:0;margin-bottom:12px;transition:color .2s;}
 .back-btn:hover{color:var(--text);}
-.detail-title{font-family:var(--font-display);font-size:1.8rem;font-weight:700;line-height:1.2;margin-bottom:4px;}
-.detail-ja{font-size:13px;color:var(--text3);margin-bottom:1rem;}
-.meta-grid{display:flex;flex-direction:column;gap:6px;margin-bottom:1rem;}
-.meta-row{display:flex;gap:.75rem;align-items:baseline;}
-.meta-key{font-size:13px;color:var(--text3);width:72px;flex-shrink:0;}
-.meta-val{font-size:15px;color:var(--text);}
-.detail-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem;}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);transition:all .15s;font-family:var(--font-body);text-decoration:none;}
-.btn:hover{border-color:var(--accent2);color:var(--text);}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#000;}
-.btn.primary:hover{background:var(--accent2);}
-.xml-output{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:1rem;font-family:var(--font-mono);font-size:11px;color:#4caf7d;white-space:pre;overflow-x:auto;margin-top:1rem;max-height:260px;overflow-y:auto;display:none;}
+.det-title{font-family:var(--serif);font-size:clamp(1.4rem,3vw,1.9rem);font-weight:700;line-height:1.2;margin-bottom:4px;}
+.det-ja{font-size:13px;color:var(--text3);margin-bottom:14px;}
+.meta-list{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+.meta-row{display:flex;gap:10px;align-items:baseline;}
+.mk{font-size:12px;color:var(--text3);width:68px;flex-shrink:0;}
+.mv{font-size:14px;}
+.mlink{color:var(--accent);cursor:pointer;transition:opacity .15s;}
+.mlink:hover{opacity:.7;}
+.det-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.dbtn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:6px;font-size:12px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);transition:all .15s;}
+.dbtn:hover{border-color:var(--border3);color:var(--text);}
+.dbtn.pri{background:var(--accent);border-color:var(--accent);color:#000;font-weight:500;}
+.dbtn.pri:hover{background:var(--accent2);}
+.xml-out{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;font-family:var(--mono);font-size:11px;color:var(--green);white-space:pre;overflow-x:auto;margin-top:12px;max-height:240px;overflow-y:auto;display:none;}
+.det-body{padding:24px;}
+.sec-h2{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:12px;}
+.sec-h2-row{display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:12px;}
+.summary-txt{font-size:14px;color:var(--text2);line-height:1.9;white-space:pre-line;margin-bottom:24px;}
+.gtags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;}
+.gtag{font-size:12px;padding:3px 10px;border:1px solid var(--border2);border-radius:4px;color:var(--text2);cursor:pointer;transition:border-color .2s;}
+.gtag:hover{border-color:var(--accent);color:var(--accent);}
 
-.detail-body{padding:2rem;}
-.sec-h{font-family:var(--font-mono);font-size:11px;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
-.sec-h-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
-.sec-h-row .sec-h{margin-bottom:0;padding-bottom:0;border-bottom:none;}
-.summary-text{font-size:14px;color:var(--text2);line-height:1.9;margin-bottom:2rem;white-space:pre-line;}
-.genres-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2rem;}
-.genre-tag{font-size:13px;padding:3px 10px;border:1px solid var(--border2);border-radius:4px;color:var(--text2);}
-
-.volumes-list{display:flex;flex-direction:column;gap:10px;}
-.vol-item{display:flex;gap:1rem;padding:1rem;border-radius:8px;background:var(--bg3);border:1px solid var(--border);position:relative;}
-.vol-cover{width:90px;flex-shrink:0;aspect-ratio:2/3;border-radius:6px;overflow:hidden;background:var(--bg);}
-.vol-cover img{width:100%;height:100%;object-fit:cover;}
-.vol-cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:10px;color:var(--text3);}
-.vol-info{flex:1;min-width:0;}
-.vol-num{font-family:var(--font-mono);font-size:12px;color:var(--accent);margin-bottom:2px;}
-.vol-title{font-size:15px;font-weight:500;margin-bottom:4px;}
-.vol-summary{font-size:14px;color:var(--text2);line-height:1.7;white-space:pre-line;}
-.vol-meta{font-size:13px;color:var(--text3);margin-top:4px;}
-.vol-btns{display:flex;flex-direction:column;gap:4px;flex-shrink:0;}
-.vol-btn{background:none;border:1px solid var(--border2);border-radius:4px;color:var(--text3);font-size:11px;padding:2px 8px;cursor:pointer;font-family:var(--font-body);transition:all .15s;}
-.vol-btn:hover{color:var(--text);border-color:var(--accent2);}
-.no-vols{font-size:13px;color:var(--text3);text-align:center;padding:2rem;}
-.vol-view-btn{background:none;border:1px solid var(--border2);border-radius:4px;padding:4px 10px;cursor:pointer;color:var(--text3);font-size:12px;font-family:var(--font-body);transition:all .15s;}
-.vol-view-btn.active{border-color:var(--accent);color:var(--accent);}
-.vol-view-btn:hover{border-color:var(--border2);color:var(--text);}
-.volumes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
-.vg-item{cursor:pointer;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);transition:transform .2s,border-color .2s;}
-.vg-item:hover{transform:translateY(-3px);border-color:var(--accent);}
+/* 單行本 */
+.vol-view-btns{display:flex;gap:4px;}
+.vvbtn{background:none;border:1px solid var(--border2);border-radius:4px;padding:3px 10px;font-size:12px;color:var(--text3);transition:all .15s;}
+.vvbtn.on{border-color:var(--accent);color:var(--accent);}
+.vols-list{display:flex;flex-direction:column;gap:10px;}
+.vol-item{display:flex;gap:14px;padding:12px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);}
+.vi-cover{width:96px;flex-shrink:0;aspect-ratio:2/3;border-radius:6px;overflow:hidden;background:var(--bg3);}
+.vi-cover img{width:100%;height:100%;object-fit:cover;}
+.vi-info{flex:1;min-width:0;}
+.vi-num{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:2px;}
+.vi-title{font-size:14px;font-weight:500;margin-bottom:5px;}
+.vi-summary{font-size:13px;color:var(--text2);line-height:1.65;white-space:pre-line;}
+.vi-meta{font-size:12px;color:var(--text3);margin-top:5px;}
+.vi-btns{display:flex;flex-direction:column;gap:4px;flex-shrink:0;}
+.vibtn{background:none;border:1px solid var(--border2);border-radius:4px;color:var(--text3);font-size:11px;padding:3px 9px;transition:all .15s;}
+.vibtn:hover{border-color:var(--accent);color:var(--accent);}
+.vols-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+.vg{cursor:pointer;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);transition:transform .2s,border-color .2s;}
+.vg:hover{transform:translateY(-3px);border-color:var(--accent);}
 .vg-cover{width:100%;aspect-ratio:2/3;background:var(--bg3);position:relative;}
 .vg-cover img{width:100%;height:100%;object-fit:cover;}
-.vg-badge{position:absolute;bottom:0;left:0;right:0;background:rgba(14,14,14,.85);font-family:var(--font-mono);font-size:12px;color:var(--accent);text-align:center;padding:6px 0;}
-.vol-popup-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.82);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem;}
-.vol-popup-overlay.open{display:flex;}
-.vol-popup{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;width:100%;max-width:700px;overflow:hidden;display:flex;position:relative;animation:slideUp .2s ease;}
-.vp-cover{width:200px;flex-shrink:0;aspect-ratio:2/3;}
-.vp-cover img{width:100%;height:100%;object-fit:cover;}
-.vp-cover-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px;font-family:var(--font-mono);}
-.vp-info{flex:1;padding:18px;min-width:0;overflow-y:auto;max-height:420px;}
-.vp-close{position:absolute;top:10px;right:10px;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
-.vp-close:hover{color:var(--text);}
-.vp-num{font-family:var(--font-mono);font-size:12px;color:var(--accent);margin-bottom:4px;}
-.vp-title{font-size:16px;font-weight:500;margin-bottom:10px;}
-.vp-summary{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:10px;white-space:pre-line;}
-.vp-meta{font-size:13px;color:var(--text3);margin-bottom:12px;display:flex;flex-direction:column;gap:4px;}
-.vp-meta span{color:var(--text2);}
+.vg-badge{position:absolute;bottom:0;left:0;right:0;background:rgba(14,14,14,.88);font-family:var(--mono);font-size:11px;color:var(--accent);text-align:center;padding:5px 0;}
+.no-vols{text-align:center;padding:2rem;color:var(--text3);font-size:13px;}
 
-/* FORM OVERLAY */
-.overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);overflow-y:auto;padding:2rem 1rem;}
-.overlay.open{display:flex;align-items:flex-start;justify-content:center;}
-.form-modal{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;width:100%;max-width:620px;padding:2rem;animation:slideUp .25s ease;position:relative;}
-@keyframes slideUp{from{transform:translateY(20px);opacity:0;}}
-.form-modal h2{font-family:var(--font-display);font-size:1.3rem;margin-bottom:.25rem;}
-.form-modal .subtitle{font-size:12px;color:var(--text3);margin-bottom:1.5rem;}
-.modal-close{position:absolute;top:1rem;right:1rem;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:color .2s;}
-.modal-close:hover{color:var(--text);}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.form-group{display:flex;flex-direction:column;gap:5px;}
-.form-group.full{grid-column:1/-1;}
-label{font-size:11px;color:var(--text3);letter-spacing:.04em;}
-input,textarea,select{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:8px 10px;color:var(--text);font-family:var(--font-body);font-size:13px;outline:none;transition:border-color .2s;width:100%;}
-input:focus,textarea:focus,select:focus{border-color:var(--accent2);}
-input::placeholder,textarea::placeholder{color:var(--text3);}
-textarea{resize:vertical;min-height:80px;}
-select option{background:var(--bg3);}
-.form-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem;}
+/* VOL POPUP */
+.popup-ov{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;}
+.popup-ov.open{display:flex;}
+.popup-box{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;width:100%;max-width:640px;display:flex;position:relative;animation:su .2s ease;overflow:hidden;}
+.pp-cover{width:200px;flex-shrink:0;aspect-ratio:2/3;}
+.pp-cover img{width:100%;height:100%;object-fit:cover;}
+.pp-info{flex:1;padding:18px;min-width:0;overflow-y:auto;max-height:440px;}
+.pp-close{position:absolute;top:10px;right:10px;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);width:28px;height:28px;border-radius:50%;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:1;}
+.pp-close:hover{color:var(--text);}
+.pp-num{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:3px;}
+.pp-title{font-size:15px;font-weight:500;margin-bottom:10px;}
+.pp-summary{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:10px;white-space:pre-line;}
+.pp-meta{font-size:12px;color:var(--text3);display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
+.pp-meta span{color:var(--text2);}
+@keyframes su{from{transform:translateY(16px);opacity:0;}}
 
-.toast{position:fixed;bottom:2rem;right:2rem;z-index:500;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--text);transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;max-width:300px;}
+/* OVERLAYS */
+.ov{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);overflow-y:auto;padding:2rem 1rem;}
+.ov.open{display:flex;align-items:flex-start;justify-content:center;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;width:100%;max-width:600px;padding:24px;position:relative;animation:su .25s ease;}
+.modal h2{font-family:var(--serif);font-size:1.25rem;margin-bottom:4px;}
+.modal .sub{font-size:12px;color:var(--text3);margin-bottom:20px;}
+.mcls{position:absolute;top:14px;right:14px;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);width:30px;height:30px;border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.mcls:hover{color:var(--text);}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fg{display:flex;flex-direction:column;gap:4px;}
+.fg.full{grid-column:1/-1;}
+.fg label{font-size:11px;color:var(--text3);letter-spacing:.03em;}
+.fg input,.fg textarea,.fg select{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:7px 10px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .2s;width:100%;}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--accent2);}
+.fg textarea{resize:vertical;min-height:72px;}
+.fg select option{background:var(--bg3);}
+.mactions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;}
+.mbtn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:6px;font-size:13px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);transition:all .15s;}
+.mbtn:hover{border-color:var(--border3);color:var(--text);}
+.mbtn.pri{background:var(--accent);border-color:var(--accent);color:#000;font-weight:500;}
+.mbtn.pri:hover{background:var(--accent2);}
+
+/* ADMIN PAGE */
+.admin-page{padding:24px;max-width:900px;margin:0 auto;}
+.admin-login{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px;}
+.admin-login h2{font-family:var(--serif);font-size:1.5rem;}
+.admin-login input{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:10px 14px;color:var(--text);font-size:14px;outline:none;width:240px;text-align:center;}
+.admin-login input:focus{border-color:var(--accent2);}
+.admin-section{margin-bottom:32px;}
+.admin-section h3{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+.admin-list{display:flex;flex-direction:column;gap:8px;}
+.admin-row{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px;}
+.admin-row-info{flex:1;min-width:0;}
+.admin-row-title{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.admin-row-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.admin-row-btns{display:flex;gap:6px;flex-shrink:0;}
+.aibtn{background:none;border:1px solid var(--border2);border-radius:4px;color:var(--text3);font-size:11px;padding:3px 9px;transition:all .15s;}
+.aibtn:hover{border-color:var(--border3);color:var(--text);}
+.aibtn.del:hover{border-color:var(--red);color:var(--red);}
+.toggle-active{width:36px;height:20px;border-radius:10px;border:none;position:relative;transition:background .2s;flex-shrink:0;}
+.toggle-active::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;transition:left .2s;}
+.toggle-active.on{background:var(--green);}
+.toggle-active.on::after{left:19px;}
+.toggle-active.off{background:var(--border2);}
+.toggle-active.off::after{left:3px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;z-index:600;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:11px 16px;font-size:13px;transform:translateY(60px);opacity:0;transition:all .3s;pointer-events:none;max-width:280px;}
 .toast.show{transform:translateY(0);opacity:1;}
-.toast.success{border-color:rgba(76,175,125,.4);}
-.toast.error{border-color:rgba(232,93,74,.4);}
+.toast.ok{border-color:rgba(76,175,125,.4);}
+.toast.err{border-color:rgba(232,93,74,.4);}
 
-@media(max-width:640px){
-  header{padding:0 1rem;gap:.75rem;}
-  .hero,.filters,.main{padding-left:1rem;padding-right:1rem;}
-  .detail-hero{flex-direction:column;gap:1rem;}
-  .detail-cover{width:140px;}
-  .form-grid{grid-template-columns:1fr;}
+@media(max-width:600px){
+  .detail-hero{flex-direction:column;}
+  .det-cover{width:120px;}
+  .fgrid{grid-template-columns:1fr;}
+  .banner-slide{height:160px;padding:0 16px;}
+  .slide-cover{display:none;}
+  .vols-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <span class="logo" onclick="goHome()">MANGABLE<span>.db</span></span>
+  <span class="logo" id="logoBtn">MANGABLE<span>.db</span></span>
   <div class="search-wrap">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" id="search" placeholder="搜尋漫畫、作者、出版社…">
+    <input type="text" id="searchInput" placeholder="搜尋漫畫、作者、出版社…">
   </div>
-  <nav>
-    <button class="nav-btn primary" onclick="openMangaForm()">+ 提交漫畫</button>
-    <a class="nav-btn" href="https://lzyplcvyinipkghfdvtx.supabase.co/rest/v1/manga?select=*" target="_blank">API</a>
-  </nav>
+  <div class="hdr-right">
+    <button class="hbtn" onclick="goSearch()">瀏覽全部</button>
+    <button class="hbtn" onclick="openMangaForm()">+ 提交漫畫</button>
+  </div>
 </header>
 
-<!-- LIST PAGE -->
-<div id="list-page">
-  <section class="hero">
-    <h1>日本漫畫<em>中文</em>資料庫</h1>
-    <p>收錄日本漫畫的完整中文元數據，支援 ComicInfo.xml 匯出與開放 API 調用。</p>
-    <div class="stats-row">
-      <div class="stat"><span class="stat-num" id="stat-manga">—</span><span class="stat-label">部漫畫</span></div>
-      <div class="stat"><span class="stat-num" id="stat-volumes">—</span><span class="stat-label">本單行本</span></div>
-    </div>
-  </section>
-  <div class="filters">
-    <span class="filter-label">狀態</span>
-    <button class="chip active" onclick="setFilter('',this)">全部</button>
-    <button class="chip" onclick="setFilter('连载中',this)">連載中</button>
-    <button class="chip" onclick="setFilter('完结',this)">完結</button>
-    <button class="chip" onclick="setFilter('休刊',this)">休刊</button>
+<!-- HOME PAGE -->
+<div class="page active" id="pg-home">
+  <div class="banner-outer" id="bannerOuter">
+    <div class="banner-empty" id="bannerEmpty" style="display:none">載入中…</div>
+    <div class="banner-track" id="bannerTrack"></div>
+    <button class="barr l" onclick="moveBanner(-1)">‹</button>
+    <button class="barr r" onclick="moveBanner(1)">›</button>
+    <div class="banner-dots" id="bannerDots"></div>
   </div>
-  <main class="main">
-    <div class="section-header">
-      <span class="section-title">漫畫列表</span>
-      <span class="result-count" id="result-count"></span>
+  <div class="news-bar">
+    <span class="news-label">NEWS</span>
+    <div class="news-track" id="newsTrack">
+      <div class="news-empty" id="newsEmpty">載入中…</div>
     </div>
-    <div class="grid" id="grid"></div>
-    <div id="load-more-trigger"></div>
-  </main>
+  </div>
+  <div class="home-body">
+    <div class="shdr">
+      <span class="stitle">最近更新</span>
+      <button class="smore" onclick="goSearch('','','latest')">查看全部 →</button>
+    </div>
+    <div class="recent-grid" id="recentGrid">
+      <div class="loading-row" style="grid-column:1/-1"><div class="spin"></div>載入中…</div>
+    </div>
+    <div class="cat-section">
+      <div class="shdr"><span class="stitle">依受眾分類</span></div>
+      <div class="cat-grid" id="audienceCats"></div>
+    </div>
+    <div class="cat-section">
+      <div class="shdr"><span class="stitle">依內容分類</span></div>
+      <div class="cat-grid" id="contentCats"></div>
+    </div>
+    <div class="shdr"><span class="stitle">依連載狀態</span></div>
+    <div class="status-row" id="statusRow"></div>
+  </div>
+</div>
+
+<!-- SEARCH PAGE -->
+<div class="page" id="pg-search">
+  <div class="search-page">
+    <div class="search-top">
+      <div class="filter-chips">
+        <button class="chip on" onclick="setChip('',this)">全部</button>
+        <button class="chip" onclick="setChip('连载中',this)">連載中</button>
+        <button class="chip" onclick="setChip('完结',this)">完結</button>
+        <button class="chip" onclick="setChip('休刊',this)">休刊</button>
+      </div>
+      <span class="result-info" id="resultInfo"></span>
+    </div>
+    <div class="manga-grid" id="mangaGrid"></div>
+    <div class="load-more-sentinel" id="sentinel"></div>
+  </div>
 </div>
 
 <!-- DETAIL PAGE -->
-<div id="detail-page">
-  <div class="detail-hero" id="detail-hero"></div>
-  <div class="detail-body" id="detail-body"></div>
+<div class="page" id="pg-detail">
+  <div id="detailHero"></div>
+  <div id="detailBody"></div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div class="page" id="pg-admin">
+  <div class="admin-page" id="adminInner"></div>
 </div>
 
 <!-- MANGA FORM -->
-<div class="overlay" id="mangaFormOverlay" onclick="overlayClick(event,'mangaFormOverlay',closeMangaForm)">
-  <div class="form-modal">
-    <button class="modal-close" onclick="closeMangaForm()">×</button>
-    <h2 id="mangaFormTitle">提交新漫畫</h2>
-    <p class="subtitle">資料將在審核後公開顯示</p>
-    <div class="form-grid">
-      <div class="form-group"><label>標題（中文）*</label><input type="text" id="f-title-zh" placeholder="魔女守護者"></div>
-      <div class="form-group"><label>標題（日文）</label><input type="text" id="f-title-ja" placeholder="WITCH WATCH"></div>
-      <div class="form-group"><label>作者（原作）</label><input type="text" id="f-writer" placeholder="篠原健太"></div>
-      <div class="form-group"><label>作畫（如與原作不同）</label><input type="text" id="f-penciller" placeholder="留空則同原作"></div>
-      <div class="form-group"><label>出版社</label><input type="text" id="f-publisher" placeholder="集英社"></div>
-      <div class="form-group"><label>連載刊物</label><input type="text" id="f-imprint" placeholder="週刊少年JUMP"></div>
-      <div class="form-group"><label>連載狀態</label>
-        <select id="f-status"><option value="连载中">連載中</option><option value="完结">完結</option><option value="休刊">休刊</option></select>
-      </div>
-      <div class="form-group"><label>年齡分級</label>
-        <select id="f-age"><option value="Everyone">全年齡</option><option value="Teen">青少年</option><option value="Mature 17+">成熟 17+</option><option value="Adults Only 18+">成人 18+</option></select>
-      </div>
-      <div class="form-group"><label>類型（逗號分隔）</label><input type="text" id="f-genres" placeholder="少年, 搞笑, 戰鬥"></div>
-      <div class="form-group"><label>標籤（逗號分隔）</label><input type="text" id="f-tags" placeholder="JUMP, 超能力"></div>
-      <div class="form-group"><label>封面圖片網址</label><input type="text" id="f-cover" placeholder="https://…"></div>
-      <div class="form-group"><label>開始年份</label><input type="number" id="f-year" placeholder="2021"></div>
-      <div class="form-group"><label>開始月份</label><input type="number" id="f-month" placeholder="1" min="1" max="12"></div>
-      <div class="form-group"><label>總卷數</label><input type="number" id="f-count" placeholder="—"></div>
-      <div class="form-group"><label>官方網址</label><input type="text" id="f-web" placeholder="https://…"></div>
-      <div class="form-group"><label>評分（0–5）</label><input type="number" id="f-rating" placeholder="4.5" min="0" max="5" step="0.1"></div>
-      <div class="form-group full"><label>簡介</label><textarea id="f-summary" rows="4" placeholder="請輸入漫畫故事簡介…"></textarea></div>
-      <div class="form-group full"><label>備註</label><textarea id="f-notes" rows="2" placeholder="編輯備註…"></textarea></div>
+<div class="ov" id="mangaOv" onclick="ovClick(event,'mangaOv',closeMangaForm)">
+  <div class="modal">
+    <button class="mcls" onclick="closeMangaForm()">×</button>
+    <h2 id="mfTitle">提交新漫畫</h2>
+    <p class="sub">資料將公開顯示於資料庫</p>
+    <div class="fgrid">
+      <div class="fg"><label>標題（中文）*</label><input id="f-zh" placeholder="魔女守護者"></div>
+      <div class="fg"><label>標題（日文）</label><input id="f-ja" placeholder="WITCH WATCH"></div>
+      <div class="fg"><label>原作者</label><input id="f-writer" placeholder="篠原健太"></div>
+      <div class="fg"><label>作畫（如與原作不同）</label><input id="f-penciller" placeholder="留空則同原作"></div>
+      <div class="fg"><label>出版社</label><input id="f-pub" placeholder="集英社"></div>
+      <div class="fg"><label>連載刊物</label><input id="f-imp" placeholder="週刊少年JUMP"></div>
+      <div class="fg"><label>連載狀態</label><select id="f-status"><option value="连载中">連載中</option><option value="完结">完結</option><option value="休刊">休刊</option></select></div>
+      <div class="fg"><label>年齡分級</label><select id="f-age"><option value="Everyone">全年齡</option><option value="Teen">青少年</option><option value="Mature 17+">成熟 17+</option><option value="Adults Only 18+">成人 18+</option></select></div>
+      <div class="fg"><label>類型（逗號分隔）</label><input id="f-genres" placeholder="少年, 搞笑, 戰鬥"></div>
+      <div class="fg"><label>標籤（逗號分隔）</label><input id="f-tags" placeholder="JUMP, 超能力"></div>
+      <div class="fg"><label>封面圖片網址</label><input id="f-cover" placeholder="https://…"></div>
+      <div class="fg"><label>開始年份</label><input type="number" id="f-year" placeholder="2021"></div>
+      <div class="fg"><label>開始月份</label><input type="number" id="f-month" placeholder="1" min="1" max="12"></div>
+      <div class="fg"><label>總卷數</label><input type="number" id="f-count"></div>
+      <div class="fg full"><label>簡介</label><textarea id="f-summary" rows="3" placeholder="故事簡介…"></textarea></div>
     </div>
-    <div class="form-actions">
-      <button class="btn" onclick="closeMangaForm()">取消</button>
-      <button class="btn primary" id="mangaFormSubmitBtn" onclick="submitManga()">提交</button>
+    <div class="mactions">
+      <button class="mbtn" onclick="closeMangaForm()">取消</button>
+      <button class="mbtn pri" id="mfBtn" onclick="submitManga()">提交</button>
     </div>
   </div>
 </div>
 
-<!-- VOLUME FORM -->
-<div class="overlay" id="volFormOverlay" onclick="overlayClick(event,'volFormOverlay',closeVolForm)">
-  <div class="form-modal">
-    <button class="modal-close" onclick="closeVolForm()">×</button>
-    <h2 id="volFormTitle">新增單行本</h2>
-    <p class="subtitle" id="volFormSub"></p>
-    <div class="form-grid">
-      <div class="form-group"><label>卷號 *</label><input type="number" id="v-number" placeholder="1" min="1"></div>
-      <div class="form-group"><label>單行本標題</label><input type="text" id="v-title" placeholder="（選填副標題）"></div>
-      <div class="form-group full"><label>本卷簡介</label><textarea id="v-summary" rows="4" placeholder="這一卷的劇情概要…"></textarea></div>
-      <div class="form-group"><label>封面圖片網址</label><input type="text" id="v-cover" placeholder="https://…"></div>
-      <div class="form-group"><label>ISBN</label><input type="text" id="v-isbn" placeholder="978-4-08-883644-7"></div>
-      <div class="form-group"><label>出版日期</label><input type="date" id="v-date"></div>
-      <div class="form-group"><label>頁數</label><input type="number" id="v-pages" placeholder="192"></div>
+<!-- VOL FORM -->
+<div class="ov" id="volOv" onclick="ovClick(event,'volOv',closeVolForm)">
+  <div class="modal">
+    <button class="mcls" onclick="closeVolForm()">×</button>
+    <h2 id="vfTitle">新增單行本</h2>
+    <p class="sub" id="vfSub"></p>
+    <div class="fgrid">
+      <div class="fg"><label>卷號 *</label><input type="number" id="v-num" min="1"></div>
+      <div class="fg"><label>副標題</label><input id="v-title" placeholder="（選填）"></div>
+      <div class="fg full"><label>本卷簡介</label><textarea id="v-summary" rows="3"></textarea></div>
+      <div class="fg full"><label>封面圖片網址</label><input id="v-cover" placeholder="https://…"></div>
+      <div class="fg"><label>ISBN</label><input id="v-isbn"></div>
+      <div class="fg"><label>出版日期</label><input type="date" id="v-date"></div>
+      <div class="fg"><label>頁數</label><input type="number" id="v-pages"></div>
     </div>
-    <div class="form-actions">
-      <button class="btn" onclick="closeVolForm()">取消</button>
-      <button class="btn primary" id="volFormSubmitBtn" onclick="submitVolume()">儲存</button>
+    <div class="mactions">
+      <button class="mbtn" onclick="closeVolForm()">取消</button>
+      <button class="mbtn pri" id="vfBtn" onclick="submitVol()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- VOL POPUP -->
+<div class="popup-ov" id="volPopup" onclick="if(event.target===this)closePopup()">
+  <div class="popup-box">
+    <button class="pp-close" onclick="closePopup()">×</button>
+    <div class="pp-cover" id="ppCover"></div>
+    <div class="pp-info">
+      <p class="pp-num" id="ppNum"></p>
+      <p class="pp-title" id="ppTitle"></p>
+      <p class="pp-summary" id="ppSummary"></p>
+      <div class="pp-meta" id="ppMeta"></div>
+      <div style="display:flex;gap:8px;">
+        <button class="dbtn pri" style="font-size:12px" onclick="exportXMLPopup()">↓ ComicInfo.xml</button>
+        <button class="dbtn" style="font-size:12px" onclick="editVolPopup()">✎ 編輯</button>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<!-- VOLUME POPUP (grid mode) -->
-<div class="vol-popup-overlay" id="volPopupOverlay" onclick="closeVolPopup(event)">
-  <div class="vol-popup">
-    <button class="vp-close" onclick="closeVolPopupBtn()">×</button>
-    <div class="vp-cover" id="vp-cover"></div>
-    <div class="vp-info">
-      <p class="vp-num" id="vp-num"></p>
-      <p class="vp-title" id="vp-title"></p>
-      <p class="vp-summary" id="vp-summary"></p>
-      <div class="vp-meta" id="vp-meta"></div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn primary" style="font-size:12px;" onclick="exportXMLFromPopup()">↓ ComicInfo.xml</button>
-        <button class="btn" style="font-size:12px;" onclick="editVolFromPopup()">✎ 編輯</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-const SURL='https://lzyplcvyinipkghfdvtx.supabase.co';
-const SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6eXBsY3Z5aW5pcGtnaGZkdnR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0ODgzNzUsImV4cCI6MjA4OTA2NDM3NX0.vUqzwgb8r0twkxZ3ltgtfVdBfQVN92p9A1zDjzrFLF8';
-const H={'apikey':SKEY,'Authorization':'Bearer '+SKEY,'Content-Type':'application/json','Prefer':'return=representation'};
-const PAGE_SIZE=24;
+const SB='https://lzyplcvyinipkghfdvtx.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6eXBsY3Z5aW5pcGtnaGZkdnR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0ODgzNzUsImV4cCI6MjA4OTA2NDM3NX0.vUqzwgb8r0twkxZ3ltgtfVdBfQVN92p9A1zDjzrFLF8';
+const H={'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':'application/json','Prefer':'return=representation'};
+const PAGE=24;
+const ADMIN_PWD='mangable2024';
 
-let state={
-  filter:'', search:'', tagFilter:'', offset:0,
-  total:null, loading:false, hasMore:true,
-  currentManga:null, editingManga:null, editingVol:null
+const state={
+  page:'home', searchQ:'', statusFilter:'', tagFilter:'',
+  srOffset:0, srTotal:null, srLoading:false, srHasMore:true,
+  currentManga:null, editManga:null, editVol:null, popupVol:null,
+  currentVols:[], volView:'list', adminAuthed:false,
+  bannerIdx:0, bannerData:[], bannerTimer:null,
 };
 
-// ── API ────────────────────────────────────────────────────
+// ── UTILS ──────────────────────────────────────────────────
 async function api(path,opts={}){
-  const r=await fetch(SURL+'/rest/v1/'+path,{headers:H,...opts});
-  if(opts.method&&opts.method!=='GET'&&r.status<300)return r;
-  return r.json();
+  const r=await fetch(SB+'/rest/v1/'+path,{headers:H,...opts});
+  if(opts.raw) return r;
+  const ct=r.headers.get('content-type')||'';
+  if(ct.includes('json'))return r.json();
+  return r;
 }
-
-async function countManga(filter,search,tagFilter){
-  let p=`manga?select=id`;
-  if(filter)p+=`&status=eq.${encodeURIComponent(filter)}`;
-  if(tagFilter){
-    const q=encodeURIComponent(`*${tagFilter}*`);
-    p+=`&or=(genres.cs.${encodeURIComponent('{"'+tagFilter+'"}')},tags.cs.${encodeURIComponent('{"'+tagFilter+'"}')})`;
-  } else if(search){
-    const q=encodeURIComponent(`%${search}%`);
-    p+=`&or=(title_zh.ilike.${q},title_ja.ilike.${q},writer.ilike.${q},publisher.ilike.${q},imprint.ilike.${q})`;
-  }
-  const r=await fetch(SURL+'/rest/v1/'+p,{
-    headers:{...H,'Prefer':'count=exact','Range':'0-0'}
-  });
+async function count(path){
+  const r=await fetch(SB+'/rest/v1/'+path,{headers:{...H,'Prefer':'count=exact','Range':'0-0'}});
   return parseInt(r.headers.get('content-range')?.split('/')[1]||0);
 }
-
-async function fetchManga(filter,search,tagFilter,offset){
-  let p=`manga?select=id,title_zh,title_ja,cover_url,writer,status,genres,latest_release&order=latest_release.desc.nullslast,created_at.desc&limit=${PAGE_SIZE}&offset=${offset}`;
-  if(filter)p+=`&status=eq.${encodeURIComponent(filter)}`;
-  if(tagFilter){
-    p+=`&or=(genres.cs.${encodeURIComponent('{"'+tagFilter+'"}')},tags.cs.${encodeURIComponent('{"'+tagFilter+'"}')})`;
-  } else if(search){
-    const q=encodeURIComponent(`%${search}%`);
-    p+=`&or=(title_zh.ilike.${q},title_ja.ilike.${q},writer.ilike.${q},publisher.ilike.${q},imprint.ilike.${q})`;
-  }
-  return api(p);
-}
-
-// ── STATS ─────────────────────────────────────────────────
-async function loadStats(){
-  const[mc,vc]=await Promise.all([
-    fetch(SURL+'/rest/v1/manga?select=id',{headers:{...H,'Prefer':'count=exact','Range':'0-0'}}),
-    fetch(SURL+'/rest/v1/volumes?select=id',{headers:{...H,'Prefer':'count=exact','Range':'0-0'}})
-  ]);
-  const mn=parseInt(mc.headers.get('content-range')?.split('/')[1]||0);
-  const vn=parseInt(vc.headers.get('content-range')?.split('/')[1]||0);
-  document.getElementById('stat-manga').textContent=mn.toLocaleString();
-  document.getElementById('stat-volumes').textContent=vn.toLocaleString();
-}
-
-// ── GRID ──────────────────────────────────────────────────
-function sClass(s){return s==='连载中'?'status-ongoing':s==='完结'?'status-complete':'status-hiatus';}
-function sLabel(s){return s==='连载中'?'連載中':s==='完结'?'完結':s==='休刊'?'休刊':s||'';}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-function formatDate(d){
-  if(!d)return null;
-  const p=d.slice(0,10).split('-');
-  return p[0]+'年'+parseInt(p[1])+'月'+parseInt(p[2])+'日';
+function formatDate(d){if(!d)return null;const p=d.slice(0,10).split('-');return p[0]+'年'+parseInt(p[1])+'月'+parseInt(p[2])+'日';}
+function formatYM(y,m){if(!y)return null;return y+'年'+(m?m+'月':'');}
+function sClass(s){return s==='连载中'?'s-on':s==='完结'?'s-end':'s-hi';}
+function sLabel(s){return s==='连载中'?'連載中':s==='完结'?'完結':'休刊';}
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+(type==='ok'?'ok':type==='err'?'err':'');
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>t.classList.remove('show'),3000);
 }
-function formatYM(year,month){
-  if(!year)return null;
-  return year+'年'+(month?month+'月':'');
-}
-
-function renderCards(manga){
-  return manga.map(m=>`
-    <a class="card" href="?id=${m.id}" onclick="openDetail(event,'${m.id}')">
-      <div class="card-cover">
-        ${m.cover_url?`<img src="${esc(m.cover_url)}" alt="${esc(m.title_zh)}" loading="lazy">`:`<div class="card-cover-ph">NO COVER</div>`}
-        <span class="status-badge ${sClass(m.status)}">${sLabel(m.status)}</span>
-      </div>
-      <div class="card-body">
-        <p class="card-title">${esc(m.title_zh||'—')}</p>
-        <p class="card-ja">${esc(m.title_ja||'')}</p>
-        <p class="card-author">${esc(m.writer||'')}</p>
-        <div class="card-tags">${(m.genres||[]).slice(0,3).map(g=>`<span class="tag">${esc(g)}</span>`).join('')}</div>
-      </div>
-    </a>`).join('');
+function ovClick(e,id,fn){if(e.target===document.getElementById(id))fn();}
+function setPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pg-'+id).classList.add('active');
+  state.page=id;
+  window.scrollTo(0,0);
 }
 
-async function loadMore(){
-  if(state.loading||!state.hasMore)return;
-  state.loading=true;
-  const grid=document.getElementById('grid');
-  if(state.offset===0){
-    grid.innerHTML='<div class="loading-row"><div class="spinner"></div>載入中…</div>';
-    state.total=await countManga(state.filter,state.search);
-    document.getElementById('result-count').textContent=state.total.toLocaleString()+' 部';
+// ── ROUTING ────────────────────────────────────────────────
+function goHome(){
+  history.pushState({},'','./');
+  setPage('home');
+}
+function goSearch(q='',status='',sort=''){
+  state.searchQ=q||''; state.statusFilter=status||''; state.tagFilter='';
+  document.getElementById('searchInput').value=state.searchQ;
+  if(sort==='tag'||sort==='tag_field_writer'||sort==='tag_field_publisher'||sort==='tag_field_penciller'||sort==='tag_field_imprint'){
+    state.tagFilter=q||'';
+    state.searchQ='';
+    document.getElementById('searchInput').value='';
   }
-  const data=await fetchManga(state.filter,state.search,state.offset);
-  if(state.offset===0)grid.innerHTML='';
-  if(!Array.isArray(data)||!data.length){
-    if(state.offset===0)grid.innerHTML='<div class="empty">沒有找到相關漫畫</div>';
-    state.hasMore=false;
-    state.loading=false;
+  if(sort==='latest') state.tagFilter='__latest__';
+  history.pushState({},'','?search='+(q||''));
+  setPage('search');
+  resetSearch();
+}
+function goDetail(id){
+  history.pushState({id},'','?id='+id);
+  setPage('detail');
+  renderDetail(id);
+}
+function goAdmin(){
+  history.pushState({},'','?admin=1');
+  setPage('admin');
+  renderAdmin();
+}
+
+// ── HOME: BANNER ──────────────────────────────────────────
+async function loadBanner(){
+  const data=await api('banners?is_active=eq.true&order=sort_order.asc');
+  state.bannerData=Array.isArray(data)?data:[];
+  const track=document.getElementById('bannerTrack');
+  const dots=document.getElementById('bannerDots');
+  if(!state.bannerData.length){
+    document.getElementById('bannerOuter').style.display='none';
     return;
   }
-  grid.insertAdjacentHTML('beforeend',renderCards(data));
-  state.offset+=data.length;
-  state.hasMore=data.length===PAGE_SIZE;
-  state.loading=false;
+  track.innerHTML=state.bannerData.map((b,i)=>`
+    <div class="banner-slide" style="background:${esc(b.bg_color||'#12110e')}">
+      <div class="slide-content">
+        <p class="slide-tag">${esc(b.tag||'')}</p>
+        <h2 class="slide-title">${esc(b.title||'')}</h2>
+        <p class="slide-sub">${esc(b.subtitle||'')}</p>
+        ${b.btn_text?`<a class="slide-btn" href="${esc(b.btn_url||'#')}">${esc(b.btn_text)}</a>`:''}
+      </div>
+      ${b.cover_url?`<div class="slide-cover"><img src="${esc(b.cover_url)}" alt="" loading="lazy"></div>`:''}
+    </div>`).join('');
+  dots.innerHTML=state.bannerData.map((_,i)=>`<div class="bdot${i===0?' on':''}" onclick="goBanner(${i})"></div>`).join('');
+  startBannerTimer();
+}
+function startBannerTimer(){
+  clearInterval(state.bannerTimer);
+  if(state.bannerData.length>1)
+    state.bannerTimer=setInterval(()=>moveBanner(1),5000);
+}
+function moveBanner(d){goBanner((state.bannerIdx+d+state.bannerData.length)%state.bannerData.length);}
+function goBanner(n){
+  state.bannerIdx=n;
+  document.getElementById('bannerTrack').style.transform=`translateX(-${n*100}%)`;
+  document.querySelectorAll('.bdot').forEach((d,i)=>d.classList.toggle('on',i===n));
+  startBannerTimer();
 }
 
-function resetGrid(){
-  state.offset=0;state.hasMore=true;state.total=null;
-  document.getElementById('grid').innerHTML='';
-  document.getElementById('result-count').textContent='';
-  loadMore();
+// ── HOME: NEWS ────────────────────────────────────────────
+async function loadNews(){
+  const data=await api('news?is_active=eq.true&order=sort_order.asc');
+  const track=document.getElementById('newsTrack');
+  if(!Array.isArray(data)||!data.length){
+    track.innerHTML='<div class="news-empty">暫無消息</div>';return;
+  }
+  const items=data.map(n=>`<span class="ni">${n.date?n.date+' · ':''}<b>${esc(n.content||'')}</b></span>`).join('');
+  track.innerHTML=`<div class="news-inner">${items}${items}</div>`;
 }
+
+// ── HOME: RECENT ──────────────────────────────────────────
+async function loadRecent(){
+  const vols=await api('volumes?select=volume_number,publish_date,cover_url,manga_id,manga:manga_id(id,title_zh)&order=publish_date.desc.nullslast&limit=20');
+  const grid=document.getElementById('recentGrid');
+  if(!Array.isArray(vols)||!vols.length){grid.innerHTML='<div style="color:var(--text3);font-size:13px">暫無資料</div>';return;}
+  const now=new Date();
+  grid.innerHTML=vols.map(v=>{
+    const d=v.publish_date?new Date(v.publish_date):null;
+    const isNew=d&&(now-d)<1000*60*60*24*30;
+    const manga=v.manga||{};
+    return `<div class="rc" onclick="goDetail('${manga.id}')">
+      <div class="rc-cover">
+        ${v.cover_url?`<img src="${esc(v.cover_url)}" alt="" loading="lazy">`:''}
+        ${isNew?'<span class="rc-new">NEW</span>':''}
+      </div>
+      <div class="rc-body">
+        <p class="rc-vol">Vol.${v.volume_number}</p>
+        <p class="rc-title">${esc(manga.title_zh||'—')}</p>
+        <p class="rc-date">${formatDate(v.publish_date)||'—'}</p>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── HOME: CATEGORIES ──────────────────────────────────────
+const AUDIENCE_CATS=[
+  {name:'少年漫畫',key:'少年',icon:'⚔',bg:'#1a1500'},
+  {name:'少女漫畫',key:'少女',icon:'🌸',bg:'#180d15'},
+  {name:'青年漫畫',key:'青年',icon:'★',bg:'#0d1520'},
+  {name:'淑女漫畫',key:'淑女',icon:'◆',bg:'#150d18'},
+  {name:'BL',key:'BL',icon:'♥',bg:'#0d1815'},
+  {name:'百合',key:'百合',icon:'✿',bg:'#180d18'},
+];
+const CONTENT_CATS=[
+  {name:'動作 / 冒險',key:'動作',icon:'⚡',bg:'#1a1000'},
+  {name:'生活 / 料理',key:'料理',icon:'◉',bg:'#0d1a10'},
+  {name:'懸疑 / 推理',key:'推理',icon:'●',bg:'#0d1520'},
+  {name:'奇幻 / 異世界',key:'奇幻',icon:'✦',bg:'#150d1a'},
+  {name:'校園',key:'校園',icon:'▲',bg:'#0d1510'},
+  {name:'歷史',key:'歷史',icon:'■',bg:'#1a1200'},
+];
+
+async function loadCategories(){
+  const mangaCount=await count('manga?select=id');
+  const ongoing=await count('manga?select=id&status=eq.连载中');
+  const ended=await count('manga?select=id&status=eq.完结');
+  const hiatus=await count('manga?select=id&status=eq.休刊');
+
+  document.getElementById('audienceCats').innerHTML=AUDIENCE_CATS.map(c=>`
+    <div class="cat" onclick="goSearch('${c.key}','','tag')">
+      <div class="cat-ico" style="background:${c.bg}">${c.icon}</div>
+      <div><p class="cat-name">${c.name}</p><p class="cat-cnt">點擊瀏覽</p></div>
+    </div>`).join('');
+
+  document.getElementById('contentCats').innerHTML=CONTENT_CATS.map(c=>`
+    <div class="cat" onclick="goSearch('${c.key}','','tag')">
+      <div class="cat-ico" style="background:${c.bg}">${c.icon}</div>
+      <div><p class="cat-name">${c.name}</p><p class="cat-cnt">點擊瀏覽</p></div>
+    </div>`).join('');
+
+  document.getElementById('statusRow').innerHTML=`
+    <div class="stc" style="background:#0f1a12;border:1px solid #1a3020" onclick="goSearch('','连载中')">
+      <div><p class="stc-label" style="color:var(--green)">連載中</p><p class="stc-sub" style="color:#3a6b4a">持續更新</p></div>
+      <span class="stc-num" style="color:var(--green)">${ongoing.toLocaleString()}</span>
+    </div>
+    <div class="stc" style="background:#0f1520;border:1px solid #1a2540" onclick="goSearch('','完结')">
+      <div><p class="stc-label" style="color:var(--blue)">已完結</p><p class="stc-sub" style="color:#3a5070">全卷收錄</p></div>
+      <span class="stc-num" style="color:var(--blue)">${ended.toLocaleString()}</span>
+    </div>
+    <div class="stc" style="background:#1a1200;border:1px solid #3a2800" onclick="goSearch('','休刊')">
+      <div><p class="stc-label" style="color:var(--accent)">休刊中</p><p class="stc-sub" style="color:#6b5a20">暫停連載</p></div>
+      <span class="stc-num" style="color:var(--accent)">${hiatus.toLocaleString()}</span>
+    </div>`;
+}
+
+// ── SEARCH ────────────────────────────────────────────────
 function resetSearch(){
-  state.search='';state.tagFilter='';
-  document.getElementById('search').value='';
-  resetGrid();
+  state.srOffset=0;state.srTotal=null;state.srHasMore=true;
+  document.getElementById('mangaGrid').innerHTML='';
+  document.getElementById('resultInfo').textContent='';
+  document.querySelectorAll('.chip').forEach(c=>{
+    const isAll=c.textContent==='全部';
+    c.classList.toggle('on',isAll?!state.statusFilter:c.textContent.includes(sLabel(state.statusFilter)));
+  });
+  loadSearchPage().then(()=>checkSentinel());
+}
+function checkSentinel(){
+  const s=document.getElementById('sentinel');
+  const grid=document.getElementById('mangaGrid');
+  if(!s||!grid||state.page!=='search') return;
+  // 如果 sentinel 在視窗內或 grid 未填滿，繼續載入
+  const rect=s.getBoundingClientRect();
+  if(rect.top < window.innerHeight + 400) loadSearchPage().then(()=>{
+    if(state.srHasMore) setTimeout(checkSentinel, 100);
+  });
+}
+
+async function buildSearchQuery(forCount=false){
+  const sel=forCount?'id':'id,title_zh,title_ja,cover_url,writer,status,genres,latest_release';
+  let q=`manga?select=${sel}`;
+  if(state.statusFilter) q+=`&status=eq.${encodeURIComponent(state.statusFilter)}`;
+  if(state.tagFilter&&state.tagFilter!=='__latest__'){
+    const tv=state.tagFilter;
+    q+=`&or=(genres.cs.${encodeURIComponent('{"'+tv+'"}')},tags.cs.${encodeURIComponent('{"'+tv+'"}')})`;
+  } else if(state.searchQ){
+    const qv=encodeURIComponent('%'+state.searchQ+'%');
+    q+=`&or=(title_zh.ilike.${qv},title_ja.ilike.${qv},writer.ilike.${qv},publisher.ilike.${qv})`;
+  }
+  if(!forCount){
+    q+=`&order=latest_release.desc.nullslast,created_at.desc&limit=${PAGE}&offset=${state.srOffset}`;
+  }
+  return q;
+}
+
+async function loadSearchPage(){
+  if(state.srLoading||!state.srHasMore)return;
+  state.srLoading=true;
+  const grid=document.getElementById('mangaGrid');
+  if(state.srOffset===0){
+    grid.innerHTML=`<div class="loading-row"><div class="spin"></div>載入中…</div>`;
+    const cq=await buildSearchQuery(true);
+    state.srTotal=await count(cq);
+    const label=state.tagFilter==='__latest__'?'最新更新':'搜尋結果';
+    document.getElementById('resultInfo').textContent=`${label}：${state.srTotal.toLocaleString()} 部`;
+  }
+  const q=await buildSearchQuery(false);
+  const data=await api(q);
+  if(state.srOffset===0) grid.innerHTML='';
+  if(!Array.isArray(data)||!data.length){
+    if(state.srOffset===0) grid.innerHTML='<div class="empty-msg">沒有找到相關漫畫</div>';
+    state.srHasMore=false; state.srLoading=false; return;
+  }
+  grid.insertAdjacentHTML('beforeend', data.map(m=>`
+    <a class="mcard" href="?id=${m.id}" onclick="event.preventDefault();goDetail('${m.id}')">
+      <div class="mcard-cover">
+        ${m.cover_url?`<img src="${esc(m.cover_url)}" alt="" loading="lazy">`:''}
+        <span class="sbadge ${sClass(m.status)}">${sLabel(m.status)}</span>
+      </div>
+      <div class="mcard-body">
+        <p class="mcard-title">${esc(m.title_zh||'—')}</p>
+        <p class="mcard-ja">${esc(m.title_ja||'')}</p>
+        <p class="mcard-author">${esc(m.writer||'')}</p>
+        <div class="mcard-tags">${(m.genres||[]).slice(0,3).map(g=>`<span class="mtag">${esc(g)}</span>`).join('')}</div>
+      </div>
+    </a>`).join(''));
+  state.srOffset+=data.length;
+  state.srHasMore=data.length===PAGE;
+  state.srLoading=false;
+}
+
+function setChip(val,el){
+  state.statusFilter=val;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  resetSearch();
 }
 
 // ── INFINITE SCROLL ───────────────────────────────────────
-const observer=new IntersectionObserver(entries=>{
-  if(entries[0].isIntersecting)loadMore();
-},{rootMargin:'200px'});
-observer.observe(document.getElementById('load-more-trigger'));
+const obs=new IntersectionObserver(e=>{
+  if(e[0].isIntersecting&&state.page==='search'&&!state.srLoading&&state.srHasMore)
+    loadSearchPage().then(()=>{if(state.srHasMore)checkSentinel();});
+},{rootMargin:'400px'});
+obs.observe(document.getElementById('sentinel'));
+// scroll 事件雙保險（桌面端內容不足時 IO 不會再次觸發）
+window.addEventListener('scroll',()=>{
+  if(state.page==='search'&&!state.srLoading&&state.srHasMore) checkSentinel();
+},{passive:true});
 
-// ── SEARCH & FILTER ───────────────────────────────────────
+// ── SEARCH INPUT ──────────────────────────────────────────
 let searchTimer;
-document.getElementById('search').addEventListener('input',e=>{
+document.getElementById('searchInput').addEventListener('input',e=>{
   clearTimeout(searchTimer);
   searchTimer=setTimeout(()=>{
-    state.search=e.target.value.trim();
-    resetGrid();
-  },400);
+    state.searchQ=e.target.value.trim();
+    state.tagFilter='';
+    if(state.page!=='search'){setPage('search');}
+    resetSearch();
+  },350);
 });
 
-function setFilter(val,el){
-  state.filter=val;
-  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  resetGrid();
-}
-
-// ── DETAIL PAGE ───────────────────────────────────────────
-async function openDetail(e,id){
-  if(e){e.preventDefault();}
-  history.pushState({id},'',`?id=${id}`);
-  await renderDetail(id);
-}
-
+// ── DETAIL ────────────────────────────────────────────────
 async function renderDetail(id){
-  document.getElementById('list-page').classList.add('hidden');
-  document.getElementById('detail-page').classList.add('active');
-  document.getElementById('detail-page').scrollIntoView({behavior:'instant'});
-  window.scrollTo(0,0);
+  document.getElementById('detailHero').innerHTML='<div class="loading-row"><div class="spin"></div>載入中…</div>';
+  document.getElementById('detailBody').innerHTML='';
+  const res=await api(`manga?id=eq.${id}&select=*`);
+  if(!Array.isArray(res)||!res.length){document.getElementById('detailHero').innerHTML='<div style="padding:2rem;color:var(--text3)">找不到此漫畫</div>';return;}
+  const m=res[0]; state.currentManga=m;
 
-  const heroEl=document.getElementById('detail-hero');
-  const bodyEl=document.getElementById('detail-body');
-  heroEl.innerHTML='<div style="padding:2rem;color:var(--text3);font-family:var(--font-mono);font-size:12px">載入中…</div>';
-  bodyEl.innerHTML='';
-
-  const m=await api(`manga?id=eq.${id}&select=*`);
-  if(!Array.isArray(m)||!m.length){heroEl.innerHTML='<div style="padding:2rem">找不到此漫畫</div>';return;}
-  const manga=m[0];
-  state.currentManga=manga;
-
-  // Hero
-  function searchLink(field, val){
-    if(!val) return null;
-    return `<a href="#" onclick="searchByField('${field}','${val.replace(/'/g,"\\'")}');return false;" style="color:var(--accent);text-decoration:none;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">${esc(val)}</a>`;
+  function slink(field,val){
+    if(!val)return null;
+    return `<a class="mlink" onclick="goSearch('${val.replace(/'/g,"\\'")}','','tag_field_${field}')">${esc(val)}</a>`;
   }
   const metaRows=[
-    ['作者', searchLink('writer', manga.writer)],
-    ['作畫', manga.penciller&&manga.penciller!==manga.writer ? searchLink('penciller', manga.penciller) : null],
-    ['出版社', searchLink('publisher', manga.publisher)],
-    ['刊物', manga.imprint ? searchLink('imprint', manga.imprint) : null],
-    ['年份', formatYM(manga.start_year,manga.start_month)],
-    ['最新發售', formatDate(manga.latest_release)],
-    ['分級', manga.age_rating],
-    ['總卷數', manga.volume_count?manga.volume_count+' 卷':null],
-    ['評分', manga.rating?manga.rating+' / 5':null],
-    ['官網', manga.web_url?`<a href="${esc(manga.web_url)}" target="_blank" style="color:var(--accent)">${esc(manga.web_url)}</a>`:null],
+    ['作者',slink('writer',m.writer)],
+    ['作畫',m.penciller&&m.penciller!==m.writer?slink('penciller',m.penciller):null],
+    ['出版社',slink('publisher',m.publisher)],
+    ['刊物',m.imprint?slink('imprint',m.imprint):null],
+    ['年份',formatYM(m.start_year,m.start_month)],
+    ['最新發售',formatDate(m.latest_release)],
+    ['分級',m.age_rating],
+    ['總卷數',m.volume_count?m.volume_count+' 卷':null],
+    ['評分',m.rating?m.rating+' / 5':null],
+    ['官網',m.web_url?`<a href="${esc(m.web_url)}" target="_blank" style="color:var(--accent)">${esc(m.web_url)}</a>`:null],
   ].filter(r=>r[1]);
 
-  heroEl.innerHTML=`
-    <div class="detail-cover">
-      ${manga.cover_url?`<img src="${esc(manga.cover_url)}" alt="">`:`<div class="detail-cover-ph">NO COVER</div>`}
-    </div>
-    <div class="detail-info">
-      <button class="back-btn" onclick="goHome()">← 返回列表</button>
-      <div style="margin-bottom:8px"><span class="status-badge ${sClass(manga.status)}" style="position:static;display:inline-block">${sLabel(manga.status)}</span></div>
-      <h1 class="detail-title">${esc(manga.title_zh||'—')}</h1>
-      <p class="detail-ja">${esc(manga.title_ja||'')}</p>
-      <div class="meta-grid">${metaRows.map(r=>`<div class="meta-row"><span class="meta-key">${r[0]}</span><span class="meta-val">${r[1]}</span></div>`).join('')}</div>
-      <div class="detail-actions">
-        <button class="btn primary" onclick="exportXML()">↓ ComicInfo.xml</button>
-        <button class="btn" onclick="copyAPI()">{ } API</button>
-        <button class="btn" onclick="openMangaForm(state.currentManga)">✎ 編輯</button>
+  document.getElementById('detailHero').innerHTML=`
+    <div class="detail-hero">
+      <div class="det-cover">${m.cover_url?`<img src="${esc(m.cover_url)}" alt="">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px">NO COVER</div>'}</div>
+      <div class="det-info">
+        <button class="back-btn" onclick="history.back()">← 返回</button>
+        <div style="margin-bottom:8px"><span class="sbadge ${sClass(m.status)}" style="position:static;display:inline-block">${sLabel(m.status)}</span></div>
+        <h1 class="det-title">${esc(m.title_zh||'—')}</h1>
+        <p class="det-ja">${esc(m.title_ja||'')}</p>
+        <div class="meta-list">${metaRows.map(r=>`<div class="meta-row"><span class="mk">${r[0]}</span><span class="mv">${r[1]}</span></div>`).join('')}</div>
+        <div class="det-actions">
+          <button class="dbtn pri" onclick="exportXML()">↓ ComicInfo.xml</button>
+          <button class="dbtn" onclick="copyAPI()">{ } API</button>
+          <button class="dbtn" onclick="openMangaForm(state.currentManga)">✎ 編輯</button>
+        </div>
+        <div class="xml-out" id="xmlOut"></div>
       </div>
-      <div class="xml-output" id="xmlOutput"></div>
     </div>`;
 
-  // Body
-  const tags=[...(manga.genres||[]),...(manga.tags||[])];
-  bodyEl.innerHTML=`
-    <div style="margin-bottom:2rem">
-      <p class="sec-h">簡介</p>
-      <p class="summary-text">${esc(manga.summary||'暫無簡介')}</p>
-    </div>
-    ${tags.length?`<div style="margin-bottom:2rem">
-      <p class="sec-h">類型 / 標籤</p>
-      <div class="genres-wrap">${tags.map(t=>`<span class="genre-tag" style="cursor:pointer" onclick="searchByTag('${t.replace(/'/g,"\\\'")}')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor=''">${esc(t)}</span>`).join('')}</div>
-    </div>`:''}
-    <div>
-      <div class="sec-h-row">
-        <span class="sec-h">單行本列表</span>
-        <div style="display:flex;gap:6px;align-items:center;">
-          <button class="vol-view-btn active" id="vbtn-list" onclick="setVolView('list')">☰ 列表</button>
-          <button class="vol-view-btn" id="vbtn-grid" onclick="setVolView('grid')">⊞ 網格</button>
-          <button class="btn" style="font-size:11px;padding:4px 10px" onclick="openVolForm()">+ 新增</button>
+  const tags=[...(m.genres||[]),...(m.tags||[])];
+  document.getElementById('detailBody').innerHTML=`
+    <div class="det-body">
+      <p class="sec-h2">簡介</p>
+      <p class="summary-txt">${esc(m.summary||'暫無簡介')}</p>
+      ${tags.length?`<p class="sec-h2">類型 / 標籤</p>
+      <div class="gtags">${tags.map(t=>`<span class="gtag" onclick="goSearch('${t.replace(/'/g,"\\'")}','','tag')">${esc(t)}</span>`).join('')}</div>`:''}
+      <div class="sec-h2-row">
+        <span class="sec-h2" style="border:none;padding:0;margin:0">單行本列表</span>
+        <div style="display:flex;gap:6px;align-items:center">
+          <div class="vol-view-btns">
+            <button class="vvbtn on" id="vvList" onclick="setVolView('list')">☰ 列表</button>
+            <button class="vvbtn" id="vvGrid" onclick="setVolView('grid')">⊞ 網格</button>
+          </div>
+          <button class="dbtn" style="font-size:11px;padding:3px 10px" onclick="openVolForm()">+ 新增</button>
         </div>
       </div>
-      <div id="volumes-list-wrap">
-        <div class="volumes-list" id="volumes-list"><div class="no-vols" style="color:var(--text3);font-size:12px">載入中…</div></div>
-        <div class="volumes-grid" id="volumes-grid" style="display:none;"></div>
-      </div>
+      <div id="volsWrap"><div class="no-vols">載入中…</div></div>
     </div>`;
-
-  loadVolumes(id);
+  loadVols(id);
 }
 
-let currentVols = [];
-
-async function loadVolumes(mangaId){
+async function loadVols(mangaId){
   const vols=await api(`volumes?manga_id=eq.${mangaId}&order=volume_number.asc`);
-  currentVols = Array.isArray(vols) ? vols : [];
-  renderVolumes();
+  state.currentVols=Array.isArray(vols)?vols:[];
+  renderVols();
 }
 
-function renderVolumes(){
-  const mode = document.getElementById('vbtn-grid')?.classList.contains('active') ? 'grid' : 'list';
-  const listEl = document.getElementById('volumes-list');
-  const gridEl = document.getElementById('volumes-grid');
-  if(!listEl||!gridEl) return;
-
-  if(!currentVols.length){
-    listEl.innerHTML='<p class="no-vols">暫無單行本資料，點上方「+ 新增單行本」開始添加</p>';
-    gridEl.innerHTML='';
-    return;
+function renderVols(){
+  const wrap=document.getElementById('volsWrap');if(!wrap)return;
+  if(!state.currentVols.length){wrap.innerHTML='<p class="no-vols">暫無單行本資料</p>';return;}
+  if(state.volView==='list'){
+    wrap.innerHTML=`<div class="vols-list">${state.currentVols.map(v=>`
+      <div class="vol-item">
+        <div class="vi-cover">${v.cover_url?`<img src="${esc(v.cover_url)}" alt="" loading="lazy">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:10px;font-family:var(--mono)">'+v.volume_number+'</div>'}</div>
+        <div class="vi-info">
+          <p class="vi-num">VOL.${v.volume_number}</p>
+          <p class="vi-title">${esc(v.title||'第 '+v.volume_number+' 卷')}</p>
+          ${v.summary?`<p class="vi-summary">${esc(v.summary)}</p>`:''}
+          <p class="vi-meta">${['發售日期：'+(formatDate(v.publish_date)||'—'),v.isbn?'ISBN: '+v.isbn:'',v.page_count?v.page_count+'頁':''].filter((x,i)=>i===0||x).join(' · ')}</p>
+        </div>
+        <div class="vi-btns">
+          <button class="vibtn" onclick='openVolForm(${JSON.stringify(v).replace(/"/g,"&quot;")})'>編輯</button>
+          <button class="vibtn" onclick='exportXML(${JSON.stringify(v).replace(/"/g,"&quot;")})'>XML</button>
+        </div>
+      </div>`).join('')}</div>`;
+  } else {
+    wrap.innerHTML=`<div class="vols-grid">${state.currentVols.map(v=>`
+      <div class="vg" onclick='openVolPopup(${JSON.stringify(v).replace(/"/g,"&quot;")})'>
+        <div class="vg-cover">
+          ${v.cover_url?`<img src="${esc(v.cover_url)}" alt="" loading="lazy">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px;font-family:var(--mono)">NO IMG</div>'}
+          <div class="vg-badge">VOL.${v.volume_number}</div>
+        </div>
+      </div>`).join('')}</div>`;
   }
-
-  // 列表模式
-  listEl.innerHTML=currentVols.map(v=>`
-    <div class="vol-item">
-      <div class="vol-cover">${v.cover_url?`<img src="${esc(v.cover_url)}" alt="">`:`<div class="vol-cover-ph">Vol.${v.volume_number}</div>`}</div>
-      <div class="vol-info">
-        <p class="vol-num">VOL.${v.volume_number}</p>
-        <p class="vol-title">${esc(v.title||'第 '+v.volume_number+' 卷')}</p>
-        ${v.summary?`<p class="vol-summary">${esc(v.summary)}</p>`:''}
-        <p class="vol-meta">${[v.publish_date?'發售日期：'+formatDate(v.publish_date):'',v.isbn?'ISBN: '+v.isbn:'',v.page_count?v.page_count+'頁':''].filter(Boolean).join(' · ')}</p>
-      </div>
-      <div class="vol-btns">
-        <button class="vol-btn" onclick='openVolForm(${JSON.stringify(v).replace(/"/g,"&quot;")})'>編輯</button>
-        <button class="vol-btn" onclick='exportXML(${JSON.stringify(v).replace(/"/g,"&quot;")})'>XML</button>
-      </div>
-    </div>`).join('');
-
-  // 網格模式
-  gridEl.innerHTML=currentVols.map(v=>`
-    <div class="vg-item" onclick='openVolPopup(${JSON.stringify(v).replace(/"/g,"&quot;")})'>
-      <div class="vg-cover">
-        ${v.cover_url?`<img src="${esc(v.cover_url)}" alt="" loading="lazy">`:`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px;font-family:var(--font-mono)">NO IMG</div>`}
-        <div class="vg-badge">VOL.${v.volume_number}</div>
-      </div>
-    </div>`).join('');
 }
 
-function setVolView(mode){
-  const listEl=document.getElementById('volumes-list');
-  const gridEl=document.getElementById('volumes-grid');
-  const btnList=document.getElementById('vbtn-list');
-  const btnGrid=document.getElementById('vbtn-grid');
-  if(!listEl||!gridEl) return;
-  listEl.style.display = mode==='list' ? 'flex' : 'none';
-  gridEl.style.display = mode==='grid' ? 'grid' : 'none';
-  btnList.classList.toggle('active', mode==='list');
-  btnGrid.classList.toggle('active', mode==='grid');
+function setVolView(v){
+  state.volView=v;
+  document.getElementById('vvList').classList.toggle('on',v==='list');
+  document.getElementById('vvGrid').classList.toggle('on',v==='grid');
+  renderVols();
 }
 
-// 网格模式浮出框
-let popupVol = null;
+// ── VOL POPUP ─────────────────────────────────────────────
 function openVolPopup(vol){
-  popupVol = vol;
-  const coverEl = document.getElementById('vp-cover');
-  coverEl.innerHTML = vol.cover_url
-    ? `<img src="${esc(vol.cover_url)}" alt="" style="width:100%;height:100%;object-fit:cover;">`
-    : `<div class="vp-cover-ph">NO COVER</div>`;
-  document.getElementById('vp-num').textContent = `VOL.${vol.volume_number}`;
-  document.getElementById('vp-title').textContent = vol.title || `第 ${vol.volume_number} 卷`;
-  document.getElementById('vp-summary').textContent = vol.summary || '暫無簡介';
-  const metaParts = [];
-  if(vol.publish_date) metaParts.push(`<div>發售日期：<span>${formatDate(vol.publish_date)}</span></div>`);
-  if(vol.page_count)   metaParts.push(`<div>頁數：<span>${vol.page_count} 頁</span></div>`);
-  if(vol.isbn)         metaParts.push(`<div>ISBN：<span>${vol.isbn}</span></div>`);
-  document.getElementById('vp-meta').innerHTML = metaParts.join('');
-  document.getElementById('volPopupOverlay').classList.add('open');
+  state.popupVol=vol;
+  document.getElementById('ppCover').innerHTML=vol.cover_url?`<img src="${esc(vol.cover_url)}" alt="" style="width:100%;height:100%;object-fit:cover">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px">NO COVER</div>';
+  document.getElementById('ppNum').textContent='VOL.'+vol.volume_number;
+  document.getElementById('ppTitle').textContent=vol.title||'第 '+vol.volume_number+' 卷';
+  document.getElementById('ppSummary').textContent=vol.summary||'暫無簡介';
+  const mp=[];
+  if(vol.publish_date) mp.push(`<div>發售日期：<span>${formatDate(vol.publish_date)}</span></div>`);
+  if(vol.page_count) mp.push(`<div>頁數：<span>${vol.page_count} 頁</span></div>`);
+  if(vol.isbn) mp.push(`<div>ISBN：<span>${vol.isbn}</span></div>`);
+  document.getElementById('ppMeta').innerHTML=mp.join('');
+  document.getElementById('volPopup').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closeVolPopup(e){
-  if(e.target===document.getElementById('volPopupOverlay')) closeVolPopupBtn();
-}
-function closeVolPopupBtn(){
-  document.getElementById('volPopupOverlay').classList.remove('open');
-  document.body.style.overflow='';
-  popupVol=null;
-}
-function exportXMLFromPopup(){
-  if(popupVol && state.currentManga) exportXML(popupVol);
-}
-function editVolFromPopup(){
-  if(popupVol){ closeVolPopupBtn(); openVolForm(popupVol); }
-}
-
-function searchByField(field, val){
-  // 先切回列表頁
-  history.pushState({},'','./');
-  document.getElementById('detail-page').classList.remove('active');
-  document.getElementById('list-page').classList.remove('hidden');
-  state.currentManga=null;
-  window.scrollTo(0,0);
-  // 設定搜尋
-  const input = document.getElementById('search');
-  input.value = val;
-  state.search = val;
-  state.tagFilter = (field === 'tag') ? val : '';
-  resetGrid();
-  input.focus();
-}
-function searchByTag(tag){
-  searchByField('tag', tag);
-}
-function goHome(){
-  history.pushState({},'','./');
-  document.getElementById('detail-page').classList.remove('active');
-  document.getElementById('list-page').classList.remove('hidden');
-  state.currentManga=null;
-  window.scrollTo(0,0);
-}
-
-// ── BROWSER BACK/FORWARD ──────────────────────────────────
-window.addEventListener('popstate',e=>{
-  const id=new URLSearchParams(location.search).get('id');
-  if(id){renderDetail(id);}
-  else{
-    document.getElementById('detail-page').classList.remove('active');
-    document.getElementById('list-page').classList.remove('hidden');
-    state.currentManga=null;
-  }
-});
+function closePopup(){document.getElementById('volPopup').classList.remove('open');document.body.style.overflow='';}
+function exportXMLPopup(){if(state.popupVol&&state.currentManga)exportXML(state.popupVol);}
+function editVolPopup(){if(state.popupVol){closePopup();openVolForm(state.popupVol);}}
 
 // ── XML EXPORT ────────────────────────────────────────────
 function buildXML(m,vol){
   const x=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  let year='',month='',day='';
-  if(vol?.publish_date){const p=vol.publish_date.split('-');year=p[0]||'';month=p[1]||'';day=p[2]||'';}
-  else{year=m.start_year||'';month=m.start_month||'';}
-  const summary=vol?.summary||m.summary||'';
+  let yr='',mo='',dy='';
+  if(vol?.publish_date){const p=vol.publish_date.split('-');yr=p[0]||'';mo=p[1]||'';dy=p[2]||'';}
+  else{yr=m.start_year||'';mo=m.start_month||'';}
   return `<?xml version="1.0" encoding="utf-8"?>
 <ComicInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Series>${x(m.title_zh)}</Series>
   <LocalizedSeries>${x(m.title_ja)}</LocalizedSeries>
   <Number>${vol?vol.volume_number:''}</Number>
   <Count>${m.volume_count||''}</Count>
-  <Summary>${x(summary)}</Summary>
+  <Summary>${x(vol?.summary||m.summary)}</Summary>
   <Publisher>${x(m.publisher)}</Publisher>
   <Imprint>${x(m.imprint)}</Imprint>
   <Writer>${x(m.writer)}</Writer>
   <Penciller>${x(m.penciller||m.writer)}</Penciller>
-  <CoverArtist>${x(m.cover_artist||m.writer)}</CoverArtist>
   <Genre>${x((m.genres||[]).join(','))}</Genre>
   <Tags>${x((m.tags||[]).join(','))}</Tags>
-  <Web>${x(m.web_url)}</Web>
   <AgeRating>${x(m.age_rating)}</AgeRating>
   <BlackAndWhite>${m.is_bw?'Yes':'No'}</BlackAndWhite>
   <Manga>${x(m.manga_direction||'YesAndRightToLeft')}</Manga>
   <LanguageISO>${x(m.language||'ja')}</LanguageISO>
-  <Year>${year}</Year><Month>${month}</Month><Day>${day}</Day>
+  <Year>${yr}</Year><Month>${mo}</Month><Day>${dy}</Day>
   <CommunityRating>${m.rating||''}</CommunityRating>
-  <Notes>${x(m.notes)}</Notes>
 </ComicInfo>`;
 }
-
 function exportXML(vol){
   const m=state.currentManga;if(!m)return;
   const xml=buildXML(m,vol||null);
-  const out=document.getElementById('xmlOutput');
-  out.textContent=xml;out.style.display='block';
+  const out=document.getElementById('xmlOut');
+  if(out){out.textContent=xml;out.style.display='block';}
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([xml],{type:'application/xml'}));
   a.download=(m.title_zh||'manga')+(vol?`_Vol${vol.volume_number}`:'')+`_ComicInfo.xml`;
   a.click();
-  showToast('✓ ComicInfo.xml 已下載','success');
+  showToast('✓ ComicInfo.xml 已下載','ok');
 }
-
 function copyAPI(){
   const m=state.currentManga;if(!m)return;
-  navigator.clipboard.writeText(`${SURL}/rest/v1/manga?id=eq.${m.id}&select=*`);
-  showToast('✓ API 網址已複製','success');
+  navigator.clipboard.writeText(`${SB}/rest/v1/manga?id=eq.${m.id}&select=*`);
+  showToast('✓ API 網址已複製','ok');
 }
 
 // ── MANGA FORM ────────────────────────────────────────────
 function openMangaForm(manga=null){
-  state.editingManga=manga;
-  const isEdit=!!manga;
-  document.getElementById('mangaFormTitle').textContent=isEdit?'編輯漫畫資料':'提交新漫畫';
-  document.getElementById('mangaFormSubmitBtn').textContent=isEdit?'儲存變更':'提交';
-  const f=(id,val)=>{const el=document.getElementById(id);if(el)el.value=val||'';};
-  f('f-title-zh',isEdit?manga.title_zh:'');f('f-title-ja',isEdit?manga.title_ja:'');
-  f('f-writer',isEdit?manga.writer:'');f('f-penciller',isEdit?manga.penciller:'');
-  f('f-publisher',isEdit?manga.publisher:'');f('f-imprint',isEdit?manga.imprint:'');
-  f('f-cover',isEdit?manga.cover_url:'');f('f-year',isEdit?manga.start_year:'');
-  f('f-month',isEdit?manga.start_month:'');f('f-count',isEdit?manga.volume_count:'');
-  f('f-web',isEdit?manga.web_url:'');f('f-rating',isEdit?manga.rating:'');
-  f('f-summary',isEdit?manga.summary:'');f('f-notes',isEdit?manga.notes:'');
-  f('f-genres',isEdit?(manga.genres||[]).join(', '):'');
-  f('f-tags',isEdit?(manga.tags||[]).join(', '):'');
-  if(isEdit){document.getElementById('f-status').value=manga.status||'连载中';document.getElementById('f-age').value=manga.age_rating||'Everyone';}
-  document.getElementById('mangaFormOverlay').classList.add('open');document.body.style.overflow='hidden';
+  state.editManga=manga;
+  const e=!!manga;
+  document.getElementById('mfTitle').textContent=e?'編輯漫畫資料':'提交新漫畫';
+  document.getElementById('mfBtn').textContent=e?'儲存變更':'提交';
+  const f=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
+  f('f-zh',e?manga.title_zh:'');f('f-ja',e?manga.title_ja:'');
+  f('f-writer',e?manga.writer:'');f('f-penciller',e?manga.penciller:'');
+  f('f-pub',e?manga.publisher:'');f('f-imp',e?manga.imprint:'');
+  f('f-cover',e?manga.cover_url:'');f('f-year',e?manga.start_year:'');
+  f('f-month',e?manga.start_month:'');f('f-count',e?manga.volume_count:'');
+  f('f-summary',e?manga.summary:'');
+  f('f-genres',e?(manga.genres||[]).join(', '):'');
+  f('f-tags',e?(manga.tags||[]).join(', '):'');
+  if(e){document.getElementById('f-status').value=manga.status||'连载中';document.getElementById('f-age').value=manga.age_rating||'Everyone';}
+  document.getElementById('mangaOv').classList.add('open');
+  document.body.style.overflow='hidden';
 }
-function closeMangaForm(){document.getElementById('mangaFormOverlay').classList.remove('open');document.body.style.overflow='';}
-
+function closeMangaForm(){document.getElementById('mangaOv').classList.remove('open');document.body.style.overflow='';}
 async function submitManga(){
-  const zh=document.getElementById('f-title-zh').value.trim();
-  if(!zh){showToast('請填寫中文標題','error');return;}
-  const writer=document.getElementById('f-writer').value.trim();
-  const penciller=document.getElementById('f-penciller').value.trim();
-  const body={
-    title_zh:zh,title_ja:document.getElementById('f-title-ja').value.trim()||null,
-    writer:writer||null,penciller:penciller||writer||null,
-    publisher:document.getElementById('f-publisher').value.trim()||null,
-    imprint:document.getElementById('f-imprint').value.trim()||null,
+  const zh=document.getElementById('f-zh').value.trim();
+  if(!zh){showToast('請填寫中文標題','err');return;}
+  const wr=document.getElementById('f-writer').value.trim();
+  const pc=document.getElementById('f-penciller').value.trim();
+  const body={title_zh:zh,title_ja:document.getElementById('f-ja').value.trim()||null,
+    writer:wr||null,penciller:pc||wr||null,
+    publisher:document.getElementById('f-pub').value.trim()||null,
+    imprint:document.getElementById('f-imp').value.trim()||null,
     status:document.getElementById('f-status').value,age_rating:document.getElementById('f-age').value,
     genres:document.getElementById('f-genres').value.split(',').map(s=>s.trim()).filter(Boolean)||null,
     tags:document.getElementById('f-tags').value.split(',').map(s=>s.trim()).filter(Boolean)||null,
@@ -763,74 +924,220 @@ async function submitManga(){
     start_year:parseInt(document.getElementById('f-year').value)||null,
     start_month:parseInt(document.getElementById('f-month').value)||null,
     volume_count:parseInt(document.getElementById('f-count').value)||null,
-    web_url:document.getElementById('f-web').value.trim()||null,
-    rating:parseFloat(document.getElementById('f-rating').value)||null,
-    summary:document.getElementById('f-summary').value.trim()||null,
-    notes:document.getElementById('f-notes').value.trim()||null,
-  };
-  const m=state.editingManga;
-  const r=m
-    ?await fetch(`${SURL}/rest/v1/manga?id=eq.${m.id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)})
-    :await fetch(`${SURL}/rest/v1/manga`,{method:'POST',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)});
+    summary:document.getElementById('f-summary').value.trim()||null};
+  const m=state.editManga;
+  const r=m?await fetch(`${SB}/rest/v1/manga?id=eq.${m.id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)}):
+             await fetch(`${SB}/rest/v1/manga`,{method:'POST',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)});
   if(r.ok){
-    showToast(m?'✓ 資料已更新':'✓ 提交成功！','success');
-    closeMangaForm();
+    showToast(m?'✓ 已更新':'✓ 提交成功','ok');closeMangaForm();
     if(m&&state.currentManga?.id===m.id)renderDetail(m.id);
-    else{resetGrid();loadStats();}
-  }else{showToast('操作失敗，請稍後再試','error');}
+  }else{showToast('操作失敗','err');}
 }
 
-// ── VOLUME FORM ───────────────────────────────────────────
+// ── VOL FORM ──────────────────────────────────────────────
 function openVolForm(vol=null){
-  state.editingVol=vol;
-  document.getElementById('volFormTitle').textContent=vol?'編輯單行本':'新增單行本';
-  document.getElementById('volFormSub').textContent=state.currentManga?.title_zh||'';
-  document.getElementById('volFormSubmitBtn').textContent=vol?'儲存變更':'新增';
-  const f=(id,val)=>{const el=document.getElementById(id);if(el)el.value=val||'';};
-  f('v-number',vol?vol.volume_number:'');f('v-title',vol?vol.title:'');
+  state.editVol=vol;
+  document.getElementById('vfTitle').textContent=vol?'編輯單行本':'新增單行本';
+  document.getElementById('vfSub').textContent=state.currentManga?.title_zh||'';
+  document.getElementById('vfBtn').textContent=vol?'儲存變更':'新增';
+  const f=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
+  f('v-num',vol?vol.volume_number:'');f('v-title',vol?vol.title:'');
   f('v-summary',vol?vol.summary:'');f('v-cover',vol?vol.cover_url:'');
   f('v-isbn',vol?vol.isbn:'');f('v-date',vol?vol.publish_date:'');f('v-pages',vol?vol.page_count:'');
-  document.getElementById('volFormOverlay').classList.add('open');document.body.style.overflow='hidden';
+  document.getElementById('volOv').classList.add('open');document.body.style.overflow='hidden';
 }
-function closeVolForm(){document.getElementById('volFormOverlay').classList.remove('open');document.body.style.overflow='';}
-
-async function submitVolume(){
-  const num=parseInt(document.getElementById('v-number').value);
-  if(!num){showToast('請填寫卷號','error');return;}
-  if(!state.currentManga){showToast('找不到漫畫資料','error');return;}
-  const body={
-    manga_id:state.currentManga.id,volume_number:num,
+function closeVolForm(){document.getElementById('volOv').classList.remove('open');document.body.style.overflow='';}
+async function submitVol(){
+  const num=parseInt(document.getElementById('v-num').value);
+  if(!num){showToast('請填寫卷號','err');return;}
+  if(!state.currentManga){showToast('找不到漫畫','err');return;}
+  const body={manga_id:state.currentManga.id,volume_number:num,
     title:document.getElementById('v-title').value.trim()||null,
     summary:document.getElementById('v-summary').value.trim()||null,
     cover_url:document.getElementById('v-cover').value.trim()||null,
     isbn:document.getElementById('v-isbn').value.trim()||null,
     publish_date:document.getElementById('v-date').value||null,
-    page_count:parseInt(document.getElementById('v-pages').value)||null,
-  };
-  const v=state.editingVol;
-  const r=v
-    ?await fetch(`${SURL}/rest/v1/volumes?id=eq.${v.id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)})
-    :await fetch(`${SURL}/rest/v1/volumes`,{method:'POST',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)});
-  if(r.ok){
-    showToast(v?'✓ 單行本已更新':'✓ 單行本已新增','success');
-    closeVolForm();
-    loadVolumes(state.currentManga.id);
-  }else{showToast('操作失敗','error');}
+    page_count:parseInt(document.getElementById('v-pages').value)||null};
+  const v=state.editVol;
+  const r=v?await fetch(`${SB}/rest/v1/volumes?id=eq.${v.id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)}):
+             await fetch(`${SB}/rest/v1/volumes`,{method:'POST',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)});
+  if(r.ok){showToast(v?'✓ 已更新':'✓ 已新增','ok');closeVolForm();loadVols(state.currentManga.id);}
+  else{showToast('操作失敗','err');}
 }
 
-// ── UTILS ─────────────────────────────────────────────────
-function overlayClick(e,id,fn){if(e.target===document.getElementById(id))fn();}
-function showToast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast '+type;
-  setTimeout(()=>t.classList.add('show'),10);
-  setTimeout(()=>t.classList.remove('show'),3000);
+// ── ADMIN ─────────────────────────────────────────────────
+function renderAdmin(){
+  const el=document.getElementById('adminInner');
+  if(!state.adminAuthed){
+    el.innerHTML=`<div class="admin-login">
+      <h2>管理入口</h2>
+      <input type="password" id="adminPwd" placeholder="輸入密碼" onkeydown="if(event.key==='Enter')checkAdminPwd()">
+      <button class="mbtn pri" onclick="checkAdminPwd()">登入</button>
+    </div>`;
+    return;
+  }
+  el.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+      <h2 style="font-family:var(--serif);font-size:1.4rem">管理後台</h2>
+      <p style="font-size:12px;color:var(--text3);margin-top:4px">訪問 <code style="color:var(--accent)">?admin=1</code> 進入此頁面</p>
+      <button class="mbtn" onclick="state.adminAuthed=false;renderAdmin()">登出</button>
+    </div>
+    <div class="admin-section">
+      <h3>Banner 幻燈片 <button class="mbtn pri" style="font-size:11px;padding:3px 12px" onclick="openBannerForm()">+ 新增</button></h3>
+      <div class="admin-list" id="bannerList">載入中…</div>
+    </div>
+    <div class="admin-section">
+      <h3>News 跑馬燈 <button class="mbtn pri" style="font-size:11px;padding:3px 12px" onclick="openNewsForm()">+ 新增</button></h3>
+      <div class="admin-list" id="newsList">載入中…</div>
+    </div>`;
+  loadAdminBanners();
+  loadAdminNews();
 }
+function checkAdminPwd(){
+  const pwd=document.getElementById('adminPwd').value;
+  if(pwd===ADMIN_PWD){state.adminAuthed=true;renderAdmin();}
+  else{showToast('密碼錯誤','err');}
+}
+async function loadAdminBanners(){
+  const data=await api('banners?order=sort_order.asc');
+  const el=document.getElementById('bannerList');if(!el)return;
+  if(!Array.isArray(data)||!data.length){el.innerHTML='<p style="color:var(--text3);font-size:13px">暫無 Banner</p>';return;}
+  el.innerHTML=data.map(b=>`
+    <div class="admin-row">
+      <button class="toggle-active ${b.is_active?'on':'off'}" onclick="toggleBanner('${b.id}',${b.is_active})"></button>
+      <div class="admin-row-info">
+        <p class="admin-row-title">${esc(b.title||'（無標題）')}</p>
+        <p class="admin-row-sub">${esc(b.tag||'')} ${b.btn_url?'· '+b.btn_url:''}</p>
+      </div>
+      <div class="admin-row-btns">
+        <button class="aibtn" onclick='openBannerForm(${JSON.stringify(b).replace(/"/g,"&quot;")})'>編輯</button>
+        <button class="aibtn del" onclick="delBanner('${b.id}')">刪除</button>
+      </div>
+    </div>`).join('');
+}
+async function loadAdminNews(){
+  const data=await api('news?order=sort_order.asc');
+  const el=document.getElementById('newsList');if(!el)return;
+  if(!Array.isArray(data)||!data.length){el.innerHTML='<p style="color:var(--text3);font-size:13px">暫無 News</p>';return;}
+  el.innerHTML=data.map(n=>`
+    <div class="admin-row">
+      <button class="toggle-active ${n.is_active?'on':'off'}" onclick="toggleNews('${n.id}',${n.is_active})"></button>
+      <div class="admin-row-info">
+        <p class="admin-row-title">${esc(n.content||'')}</p>
+        <p class="admin-row-sub">${esc(n.date||'')}</p>
+      </div>
+      <div class="admin-row-btns">
+        <button class="aibtn" onclick='openNewsForm(${JSON.stringify(n).replace(/"/g,"&quot;")})'>編輯</button>
+        <button class="aibtn del" onclick="delNews('${n.id}')">刪除</button>
+      </div>
+    </div>`).join('');
+}
+async function toggleBanner(id,cur){
+  await fetch(`${SB}/rest/v1/banners?id=eq.${id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify({is_active:!cur})});
+  loadAdminBanners();
+}
+async function toggleNews(id,cur){
+  await fetch(`${SB}/rest/v1/news?id=eq.${id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify({is_active:!cur})});
+  loadAdminNews();
+}
+async function delBanner(id){if(!confirm('確定刪除？'))return;await fetch(`${SB}/rest/v1/banners?id=eq.${id}`,{method:'DELETE',headers:H});loadAdminBanners();}
+async function delNews(id){if(!confirm('確定刪除？'))return;await fetch(`${SB}/rest/v1/news?id=eq.${id}`,{method:'DELETE',headers:H});loadAdminNews();}
+
+// Banner Form
+function openBannerForm(b=null){
+  const html=`<div class="ov open" id="bannerFormOv" onclick="ovClick(event,'bannerFormOv',()=>document.getElementById('bannerFormOv').remove())">
+    <div class="modal">
+      <button class="mcls" onclick="document.getElementById('bannerFormOv').remove()">×</button>
+      <h2>${b?'編輯 Banner':'新增 Banner'}</h2>
+      <p class="sub">幻燈片內容設定</p>
+      <div class="fgrid">
+        <div class="fg"><label>標籤文字（小字）</label><input id="bf-tag" value="${esc(b?.tag||'')}" placeholder="FEATURED · 專題"></div>
+        <div class="fg"><label>排序</label><input type="number" id="bf-sort" value="${b?.sort_order||0}"></div>
+        <div class="fg full"><label>標題 *</label><input id="bf-title" value="${esc(b?.title||'')}" placeholder="Banner 主標題"></div>
+        <div class="fg full"><label>副標題</label><input id="bf-sub" value="${esc(b?.subtitle||'')}" placeholder="一行說明文字"></div>
+        <div class="fg"><label>按鈕文字</label><input id="bf-btn" value="${esc(b?.btn_text||'')}" placeholder="立即瀏覽"></div>
+        <div class="fg"><label>按鈕連結</label><input id="bf-url" value="${esc(b?.btn_url||'')}" placeholder="https://…"></div>
+        <div class="fg full"><label>封面圖片網址</label><input id="bf-cover" value="${esc(b?.cover_url||'')}" placeholder="https://…"></div>
+        <div class="fg"><label>背景色</label><input id="bf-bg" value="${esc(b?.bg_color||'#12110e')}" placeholder="#12110e"></div>
+      </div>
+      <div class="mactions">
+        <button class="mbtn" onclick="document.getElementById('bannerFormOv').remove()">取消</button>
+        <button class="mbtn pri" onclick="saveBanner('${b?.id||''}')">儲存</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+  document.body.style.overflow='hidden';
+}
+async function saveBanner(id){
+  const title=document.getElementById('bf-title').value.trim();
+  if(!title){showToast('請填寫標題','err');return;}
+  const body={title,tag:document.getElementById('bf-tag').value.trim()||null,
+    subtitle:document.getElementById('bf-sub').value.trim()||null,
+    btn_text:document.getElementById('bf-btn').value.trim()||null,
+    btn_url:document.getElementById('bf-url').value.trim()||null,
+    cover_url:document.getElementById('bf-cover').value.trim()||null,
+    bg_color:document.getElementById('bf-bg').value.trim()||'#12110e',
+    sort_order:parseInt(document.getElementById('bf-sort').value)||0};
+  const r=id?await fetch(`${SB}/rest/v1/banners?id=eq.${id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)}):
+              await fetch(`${SB}/rest/v1/banners`,{method:'POST',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)});
+  if(r.ok){showToast('✓ 已儲存','ok');document.getElementById('bannerFormOv').remove();document.body.style.overflow='';loadAdminBanners();}
+  else{showToast('儲存失敗','err');}
+}
+
+// News Form
+function openNewsForm(n=null){
+  const html=`<div class="ov open" id="newsFormOv" onclick="ovClick(event,'newsFormOv',()=>document.getElementById('newsFormOv').remove())">
+    <div class="modal">
+      <button class="mcls" onclick="document.getElementById('newsFormOv').remove()">×</button>
+      <h2>${n?'編輯 News':'新增 News'}</h2>
+      <div class="fgrid">
+        <div class="fg"><label>日期（顯示用）</label><input id="nf-date" value="${esc(n?.date||'')}" placeholder="03/15"></div>
+        <div class="fg"><label>排序</label><input type="number" id="nf-sort" value="${n?.sort_order||0}"></div>
+        <div class="fg full"><label>內容 *</label><input id="nf-content" value="${esc(n?.content||'')}" placeholder="資料庫新增《地獄廚房》1-16 卷"></div>
+      </div>
+      <div class="mactions">
+        <button class="mbtn" onclick="document.getElementById('newsFormOv').remove()">取消</button>
+        <button class="mbtn pri" onclick="saveNews('${n?.id||''}')">儲存</button>
+      </div>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+  document.body.style.overflow='hidden';
+}
+async function saveNews(id){
+  const content=document.getElementById('nf-content').value.trim();
+  if(!content){showToast('請填寫內容','err');return;}
+  const body={content,date:document.getElementById('nf-date').value.trim()||null,
+    sort_order:parseInt(document.getElementById('nf-sort').value)||0};
+  const r=id?await fetch(`${SB}/rest/v1/news?id=eq.${id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)}):
+              await fetch(`${SB}/rest/v1/news`,{method:'POST',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(body)});
+  if(r.ok){showToast('✓ 已儲存','ok');document.getElementById('newsFormOv').remove();document.body.style.overflow='';loadAdminNews();}
+  else{showToast('儲存失敗','err');}
+}
+
+// ── BROWSER HISTORY ───────────────────────────────────────
+document.getElementById('logoBtn').onclick=()=>goHome();
+window.addEventListener('popstate',e=>{
+  const id=new URLSearchParams(location.search).get('id');
+  const adm=new URLSearchParams(location.search).get('admin');
+  if(id){setPage('detail');renderDetail(id);}
+  else if(adm!==null){setPage('admin');renderAdmin();}
+  else{setPage('home');}
+});
 
 // ── INIT ──────────────────────────────────────────────────
-const initId=new URLSearchParams(location.search).get('id');
-if(initId){renderDetail(initId);}
-else{loadStats();loadMore();}
+(async()=>{
+  const params=new URLSearchParams(location.search);
+  const id=params.get('id');
+  const adm=params.get('admin');
+  if(id){setPage('detail');await renderDetail(id);}
+  else if(adm!==null){setPage('admin');renderAdmin();}
+  else{
+    setPage('home');
+    await Promise.all([loadBanner(),loadNews(),loadRecent(),loadCategories()]);
+  }
+})();
 </script>
 </body>
 </html>
