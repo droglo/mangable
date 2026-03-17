@@ -43,9 +43,9 @@ header{position:sticky;top:0;z-index:200;background:rgba(14,14,14,.95);backdrop-
 .banner-outer{position:relative;overflow:hidden;background:var(--bg2);border-bottom:1px solid var(--border);}
 .banner-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);}
 .banner-slide{min-width:100%;height:260px;display:flex;align-items:center;padding:0 32px;position:relative;overflow:hidden;}
-.slide-content{position:relative;z-index:2;max-width:420px;}
+.slide-content{position:relative;z-index:2;max-width:560px;}
 .slide-tag{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:.12em;margin-bottom:8px;}
-.slide-title{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;line-height:1.2;margin-bottom:6px;}
+.slide-title{font-family:var(--serif);font-size:clamp(1.6rem,2.5vw,2.8rem);font-weight:700;line-height:1.2;margin-bottom:6px;}
 .slide-sub{font-size:14px;color:var(--text2);margin-bottom:16px;}
 .slide-btn{display:inline-block;background:var(--accent);color:#000;font-size:13px;font-weight:500;padding:9px 22px;border-radius:6px;transition:background .15s;}
 .slide-btn:hover{background:var(--accent2);}
@@ -61,7 +61,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(14,14,14,.95);backdrop-
 
 /* ── HOME: NEWS ── */
 .news-bar{background:var(--bg2);border-bottom:1px solid var(--border);height:38px;display:flex;align-items:center;overflow:hidden;}
-.news-label{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em;padding:0 14px;border-right:1px solid var(--border2);white-space:nowrap;height:100%;display:flex;align-items:center;}
+.news-label{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em;padding:0 18px;border-right:1px solid var(--border2);white-space:nowrap;height:100%;display:flex;align-items:center;}
 .news-track{flex:1;overflow:hidden;height:100%;display:flex;align-items:center;}
 .news-inner{display:flex;white-space:nowrap;animation:ticker 30s linear infinite;}
 .news-inner:hover{animation-play-state:paused;}
@@ -71,7 +71,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(14,14,14,.95);backdrop-
 .news-empty{flex:1;display:flex;align-items:center;padding:0 16px;font-size:12px;color:var(--text3);}
 
 /* ── HOME: SECTIONS ── */
-.home-body{padding:24px 28px 48px;}
+.home-body{padding:24px 28px 48px;max-width:2400px;margin:0 auto;}
 .shdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .stitle{font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;}
 .smore{background:none;border:none;font-size:12px;color:var(--accent);padding:0;}
@@ -91,7 +91,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(14,14,14,.95);backdrop-
 
 /* 分類 */
 .cat-section{margin-bottom:28px;}
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(160px,14vw,260px),1fr));gap:10px;}
 .cat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:border-color .2s,background .2s;}
 .cat:hover{border-color:var(--border3);background:var(--bg3);}
 .cat-ico{width:38px;height:38px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
@@ -99,7 +99,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(14,14,14,.95);backdrop-
 .cat-cnt{font-size:12px;color:var(--text3);margin-top:2px;}
 
 /* 狀態卡 */
-.status-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:28px;}
+.status-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
 .stc{border-radius:8px;padding:14px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:opacity .2s;}
 .stc:hover{opacity:.85;}
 .stc-label{font-size:13px;font-weight:500;}
@@ -107,7 +107,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(14,14,14,.95);backdrop-
 .stc-num{font-family:var(--mono);font-size:20px;font-weight:700;}
 
 /* ── SEARCH PAGE ── */
-.search-page{padding:16px 24px 40px;}
+.search-page{padding:16px 28px 48px;max-width:2400px;margin:0 auto;}
 .search-top{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
 .filter-chips{display:flex;gap:6px;flex-wrap:wrap;}
 .chip{background:none;border:1px solid var(--border2);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--text2);transition:all .15s;}
@@ -123,7 +123,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(14,14,14,.95);backdrop-
 .s-on{background:rgba(76,175,125,.2);color:var(--green);border:1px solid rgba(76,175,125,.3);}
 .s-end{background:rgba(91,155,213,.2);color:var(--blue);border:1px solid rgba(91,155,213,.3);}
 .s-hi{background:rgba(232,93,74,.15);color:var(--red);border:1px solid rgba(232,93,74,.25);}
-.mcard-body{padding:11px 12px 13px;}
+.mcard-body{padding:12px 14px 14px;}
 .mcard-title{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
 .mcard-ja{font-size:12px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px;}
 .mcard-author{font-size:13px;color:var(--text2);}
@@ -540,23 +540,23 @@ async function loadNews(){
 
 // ── HOME: RECENT ──────────────────────────────────────────
 async function loadRecent(){
-  const vols=await api('volumes?select=volume_number,publish_date,cover_url,manga_id,manga:manga_id(id,title_zh)&order=publish_date.desc.nullslast&limit=20');
+  // manga.cover_url 已由爬蟲自動更新為最新卷封面
+  const mangas=await api('manga?select=id,title_zh,cover_url,latest_release,volume_count,status&order=latest_release.desc.nullslast&limit=20');
   const grid=document.getElementById('recentGrid');
-  if(!Array.isArray(vols)||!vols.length){grid.innerHTML='<div style="color:var(--text3);font-size:13px">暫無資料</div>';return;}
+  if(!Array.isArray(mangas)||!mangas.length){grid.innerHTML='<div style="color:var(--text3);font-size:13px">暫無資料</div>';return;}
   const now=new Date();
-  grid.innerHTML=vols.map(v=>{
-    const d=v.publish_date?new Date(v.publish_date):null;
-    const isNew=d&&(now-d)<1000*60*60*24*30;
-    const manga=v.manga||{};
-    return `<div class="rc" onclick="goDetail('${manga.id}')">
+  grid.innerHTML=mangas.map(m=>{
+    const d=m.latest_release?new Date(m.latest_release):null;
+    const isNew=d&&(now-d)<1000*60*60*24*14;
+    return `<div class="rc" onclick="goDetail('${m.id}')">
       <div class="rc-cover">
-        ${v.cover_url?`<img src="${esc(v.cover_url)}" alt="" loading="lazy">`:''}
+        ${m.cover_url?`<img src="${esc(m.cover_url)}" alt="" loading="lazy">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px">NO IMG</div>'}
         ${isNew?'<span class="rc-new">NEW</span>':''}
       </div>
       <div class="rc-body">
-        <p class="rc-vol">Vol.${v.volume_number}</p>
-        <p class="rc-title">${esc(manga.title_zh||'—')}</p>
-        <p class="rc-date">${formatDate(v.publish_date)||'—'}</p>
+        <p class="rc-vol">${m.volume_count?'最新 Vol.'+m.volume_count:''}</p>
+        <p class="rc-title">${esc(m.title_zh||'—')}</p>
+        <p class="rc-date">${formatDate(m.latest_release)||'—'}</p>
       </div>
     </div>`;
   }).join('');
