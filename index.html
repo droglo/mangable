@@ -550,7 +550,7 @@ async function loadBanner(){
         <p class="slide-sub">${esc(b.subtitle||'')}</p>
         ${b.btn_text?`<a class="slide-btn" href="${esc(b.btn_url||'#')}">${esc(b.btn_text)}</a>`:''}
       </div>
-      ${b.cover_url?`<div class="slide-cover"><img src="${esc(b.cover_url)}" alt="" loading="lazy"></div>`:''}
+      ${b.cover_url?`<div class="slide-cover"><img src="${esc(b.cover_url)}" alt="" loading="lazy" referrerpolicy="no-referrer"></div>`:''}
     </div>`).join('');
   dots.innerHTML=state.bannerData.map((_,i)=>`<div class="bdot${i===0?' on':''}" onclick="goBanner(${i})"></div>`).join('');
   startBannerTimer();
@@ -608,7 +608,7 @@ async function loadRecent(){
     const isNew=d&&(now-d)<1000*60*60*24*14;
     return `<div class="rc" onclick="goDetail('${m.id}')">
       <div class="rc-cover">
-        ${m.cover_url?`<img src="${esc(m.cover_url)}" alt="" loading="lazy">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px">NO IMG</div>'}
+        ${m.cover_url?`<img src="${esc(m.cover_url)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px">NO IMG</div>'}
         ${isNew?'<span class="rc-new">NEW</span>':''}
       </div>
       <div class="rc-body">
@@ -741,7 +741,7 @@ async function loadSearchPage(){
   grid.insertAdjacentHTML('beforeend', data.map(m=>`
     <a class="mcard" href="?id=${m.id}" onclick="event.preventDefault();goDetail('${m.id}')">
       <div class="mcard-cover">
-        ${m.cover_url?`<img src="${esc(m.cover_url)}" alt="" loading="lazy">`:''}
+        ${m.cover_url?`<img src="${esc(m.cover_url)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:''}
         <span class="sbadge ${sClass(m.status)}">${sLabel(m.status)}</span>
       </div>
       <div class="mcard-body">
@@ -814,7 +814,7 @@ async function renderDetail(id){
 
   document.getElementById('detailHero').innerHTML=`
     <div class="detail-hero">
-      <div class="det-cover">${m.cover_url?`<img src="${esc(m.cover_url)}" alt="">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px">NO COVER</div>'}</div>
+      <div class="det-cover">${m.cover_url?`<img src="${esc(m.cover_url)}" alt="" referrerpolicy="no-referrer">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px">NO COVER</div>'}</div>
       <div class="det-info">
         <button class="back-btn" onclick="history.back()">← 返回</button>
         <div style="margin-bottom:8px"><span class="sbadge ${sClass(m.status)}" style="position:static;display:inline-block">${sLabel(m.status)}</span></div>
@@ -865,7 +865,7 @@ function renderVols(){
     wrap.innerHTML=`<div class="vols-list">${state.currentVols.map(v=>{
       const hasSummary=v.summary&&v.summary.length>80;
       return `<div class="vol-item" id="vi-${v.volume_number}">
-        <div class="vi-cover">${v.cover_url?`<img src="${esc(v.cover_url)}" alt="" loading="lazy">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:10px;font-family:var(--mono)">'+v.volume_number+'</div>'}</div>
+        <div class="vi-cover">${v.cover_url?`<img src="${esc(v.cover_url)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:10px;font-family:var(--mono)">'+v.volume_number+'</div>'}</div>
         <div class="vi-info">
           <p class="vi-num">VOL.${v.volume_number}</p>
           <p class="vi-title">${esc(v.title||'第 '+v.volume_number+' 卷')}</p>
@@ -883,7 +883,7 @@ function renderVols(){
     wrap.innerHTML=`<div class="vols-grid">${state.currentVols.map(v=>`
       <div class="vg" onclick='openVolPopup(${JSON.stringify(v).replace(/"/g,"&quot;")})'>
         <div class="vg-cover">
-          ${v.cover_url?`<img src="${esc(v.cover_url)}" alt="" loading="lazy">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px;font-family:var(--mono)">NO IMG</div>'}
+          ${v.cover_url?`<img src="${esc(v.cover_url)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px;font-family:var(--mono)">NO IMG</div>'}
           <div class="vg-badge">VOL.${v.volume_number}</div>
         </div>
       </div>`).join('')}</div>`;
@@ -906,7 +906,7 @@ function setVolView(v){
 // ── VOL POPUP ─────────────────────────────────────────────
 function openVolPopup(vol){
   state.popupVol=vol;
-  document.getElementById('ppCover').innerHTML=vol.cover_url?`<img src="${esc(vol.cover_url)}" alt="" style="width:100%;height:100%;object-fit:cover">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px">NO COVER</div>';
+  document.getElementById('ppCover').innerHTML=vol.cover_url?`<img src="${esc(vol.cover_url)}" alt="" referrerpolicy="no-referrer" style="width:100%;height:100%;object-fit:cover">`:'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px">NO COVER</div>';
   document.getElementById('ppNum').textContent='VOL.'+vol.volume_number;
   document.getElementById('ppTitle').textContent=vol.title||'第 '+vol.volume_number+' 卷';
   document.getElementById('ppSummary').textContent=vol.summary||'暫無簡介';
